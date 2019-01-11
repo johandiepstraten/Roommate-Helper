@@ -23,7 +23,7 @@
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText2" />
+            app:layout_constraintTop_toBottomOf="@+id/createPassword" />
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -49,7 +49,7 @@
             app:layout_constraintVertical_bias="0.165" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/createName"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -63,7 +63,7 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/createPassword"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -74,7 +74,7 @@
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            app:layout_constraintTop_toBottomOf="@+id/createName" />
 
     </android.support.constraint.ConstraintLayout>
 
