@@ -1,4 +1,4 @@
-# 10 basic style rules
+# Basic style rules
 
 1. One white line above every comment.
 2. 100 column limit.
