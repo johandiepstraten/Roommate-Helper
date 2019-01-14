@@ -12,13 +12,15 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PostuserHelper implements Response.Errorlistener, Response.listener {
-    User newuser;
+public class PostuserHelper implements Response.ErrorListener, Response.Listener {
+    String username;
+    String password;
     CallbackPost activity;
 
     //    request right online json file to put score in
-    public PostuserHelper(User newuser, Context context, CallbackPost cb) {
-        this.newuser = newuser;
+    public PostuserHelper(String username, String password, Context context, CallbackPost cb) {
+        this.username = username;
+        this.password = password;
         this.activity = cb;
         RequestQueue queue = Volley.newRequestQueue(context);
         PostRequest request = new PostRequest(Request.Method.POST, "https://ide50-johadiep.legacy.cs50.io:8080/users", this, this);
@@ -57,7 +59,9 @@ public class PostuserHelper implements Response.Errorlistener, Response.listener
         protected Map<String, String> getParams() {
 
             Map<String, String> params = new HashMap<>();
-            params.put("User", newuser);
+            params.put("Username", username);
+            params.put("Password", password);
+            params.put("Group", null);
             return params;
         }
     }

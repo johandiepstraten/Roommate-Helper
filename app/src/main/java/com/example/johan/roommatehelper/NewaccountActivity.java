@@ -25,7 +25,7 @@ public class NewaccountActivity extends AppCompatActivity implements PostuserHel
             Toast.makeText(this, "passwords must be the same", Toast.LENGTH_SHORT).show();
         }   else    {
             User new_user = new User(username, password, null);
-            PostuserHelper helper = new PostuserHelper(new_user, getApplicationContext(), NewaccountActivity.this);
+            PostuserHelper helper = new PostuserHelper(username, password, getApplicationContext(), NewaccountActivity.this);
             Intent intent = new Intent(NewaccountActivity.this, OverviewActivity.class);
             startActivity(intent);
         }
