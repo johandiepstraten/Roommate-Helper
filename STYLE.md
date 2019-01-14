@@ -16,4 +16,5 @@
 # Links
 https://github.com/twitter/commons/blob/master/src/java/com/twitter/common/styleguide.md
 https://javaranch.com/style.jsp
+
 https://google.github.io/styleguide/javaguide.html
