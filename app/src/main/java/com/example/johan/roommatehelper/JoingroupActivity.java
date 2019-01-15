@@ -10,12 +10,16 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
-public class JoingroupActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class JoingroupActivity extends AppCompatActivity implements GroupsRequest.Callback{
 
     private DrawerLayout Drawerlayout;
-
+    User user;
+    ArrayList<Group> groups;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +31,12 @@ public class JoingroupActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("Join Group");
+
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("loggedInUser");
+
+        GroupsRequest groupRequest = new GroupsRequest(this);
+        groupRequest.getGroups(this);
 
         Drawerlayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -68,6 +78,16 @@ public class JoingroupActivity extends AppCompatActivity {
                 });
     }
     @Override
+    public void gotGroups(ArrayList<Group> groupsList) {
+        groups = groupsList;
+        Toast.makeText(this, "groups loaded", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void gotGroupsError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -81,12 +101,33 @@ public class JoingroupActivity extends AppCompatActivity {
     }
 
     public void Join(View view) {
-        Toast.makeText(this, "Group joined", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(JoingroupActivity.this, GroupActivity.class));
+        String groupName = ((EditText)findViewById(R.id.groupName)).getText().toString();
+        String groupPassword = ((EditText)findViewById(R.id.groupPassword)).getText().toString();
+        for(int i = 0; i < groups.size(); i++)   {
+            Group currentGroup = groups.get(i);
+            String currentGroupName = currentGroup.getGroupName();
+            if (groupName.equals(currentGroupName))    {
+                String currentGroupPassword = currentGroup.getGroupPassword();
+                if (groupPassword.equals(currentGroupPassword))   {
+                    ArrayList<String> joinedGroup = currentGroup.getGroupMembers();
+//                    PutGroupHelper groupHelper = new PutGroupHelper(currentGroup, getApplicationContext(), JoingroupActivity.this);
+                    joinedGroup.add(user.getUser_name());
+                    user.setGroup_name(currentGroup.getGroupName());
+//                    PutUserHelper userHelper = new PutUserHelper(user, getApplicationContext(), JoingroupActivity.this);
+                    Intent intent = new Intent(JoingroupActivity.this, OverviewActivity.class);
+                    intent.putExtra("loggedInUser", user);
+                    startActivity(intent);
+                } else  {
+                    Toast.makeText(this, "Wrong password", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+        Toast.makeText(this, "Username unknown", Toast.LENGTH_SHORT).show();
     }
 
     public void create_group(View view) {
         Intent intent = new Intent(JoingroupActivity.this, CreategroupActivity.class);
+        intent.putExtra("loggedInUser", user);
         startActivity(intent);
     }
 }

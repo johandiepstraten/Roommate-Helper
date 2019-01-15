@@ -52,50 +52,48 @@
             app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
         <EditText
-            android:id="@+id/createName"
+            android:id="@+id/loginName"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="96dp"
+            android:layout_marginTop="104dp"
             android:layout_marginEnd="8dp"
             android:ems="10"
-            android:inputType="textPersonName"
             android:hint="Name"
+            android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/createPassword"
+            android:id="@+id/loginPassword"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createName" />
+            app:layout_constraintTop_toBottomOf="@+id/loginName" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_height="49dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="212dp"
             android:onClick="Login"
             android:text="Log in"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createPassword"
-            app:layout_constraintVertical_bias="0.06" />
+            app:layout_constraintTop_toBottomOf="@+id/loginPassword"
+            app:layout_constraintVertical_bias="0.343" />
 
         <!--<TextView-->
             <!--android:id="@+id/task_toolbar_title"-->

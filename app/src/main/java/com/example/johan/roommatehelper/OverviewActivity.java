@@ -15,7 +15,7 @@ import android.view.View;
 public class OverviewActivity extends AppCompatActivity {
 
     private DrawerLayout Drawerlayout;
-
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +27,15 @@ public class OverviewActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("My Tasks");
+
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("loggedInUser");
+        String userGroup = user.getGroup_name();
+        if (userGroup.equals(null)) {
+            Intent joingroup_intent = new Intent(OverviewActivity.this, JoingroupActivity.class);
+            intent.putExtra("loggedInUser", user);
+            startActivity(joingroup_intent);
+        }
 
         Drawerlayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);

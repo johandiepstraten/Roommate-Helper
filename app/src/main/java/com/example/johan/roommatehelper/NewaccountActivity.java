@@ -8,7 +8,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class NewaccountActivity extends AppCompatActivity implements PostuserHelper.CallbackPost {
-
+    String username;
+    String password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +25,9 @@ public class NewaccountActivity extends AppCompatActivity implements PostuserHel
         }   else if (!password.equals(password2))  {
             Toast.makeText(this, "passwords must be the same", Toast.LENGTH_SHORT).show();
         }   else    {
-            User new_user = new User(username, password, null);
             PostuserHelper helper = new PostuserHelper(username, password, getApplicationContext(), NewaccountActivity.this);
-            Intent intent = new Intent(NewaccountActivity.this, OverviewActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(NewaccountActivity.this, OverviewActivity.class);
+//            startActivity(intent);
         }
     }
 //     send user to MainActivity if back button is pressed

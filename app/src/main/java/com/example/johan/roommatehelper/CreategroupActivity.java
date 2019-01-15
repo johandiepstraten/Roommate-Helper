@@ -10,12 +10,16 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
-public class CreategroupActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class CreategroupActivity extends AppCompatActivity implements PostgroupHelper.CallbackPost {
 
     private DrawerLayout Drawerlayout;
-
+    User user;
+    ArrayList<String> members;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +31,11 @@ public class CreategroupActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("Create Group");
+
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("loggedInUser");
+        String userName = user.getUser_name();
+        members.add(userName);
 
         Drawerlayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -81,7 +90,31 @@ public class CreategroupActivity extends AppCompatActivity {
     }
 
     public void group_created(View view) {
+        String groupName = ((EditText)findViewById(R.id.createGroupName)).getText().toString();
+        String groupPassword = ((EditText)findViewById(R.id.createGroupPassword)).getText().toString();
+        String groupPassword2 = ((EditText)findViewById(R.id.recreateGroupPassword)).getText().toString();
+        if (groupName.length() == 0 || groupPassword.length() == 0)  {
+            Toast.makeText(this, "Fill in all boxes", Toast.LENGTH_SHORT).show();
+        }   else if (!groupPassword.equals(groupPassword2))  {
+            Toast.makeText(this, "passwords must be the same", Toast.LENGTH_SHORT).show();
+        }   else    {
+            PostgroupHelper helper = new PostgroupHelper(groupName, groupPassword, members, getApplicationContext(), CreategroupActivity.this);
+//            Toast.makeText(this, "Group created", Toast.LENGTH_SHORT).show();
+//            Intent intent = new Intent(CreategroupActivity.this, OverviewActivity.class);
+//            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void gotHelper(String message) {
         Toast.makeText(this, "Group created", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(CreategroupActivity.this, GroupActivity.class));
+        Intent intent = new Intent(CreategroupActivity.this, OverviewActivity.class);
+        intent.putExtra("loggedInUser", user);
+        startActivity(intent);
+    }
+
+    @Override
+    public void gotHelperError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

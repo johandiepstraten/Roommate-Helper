@@ -3,7 +3,9 @@ package com.example.johan.roommatehelper;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private String user_name, user_password, group_name;
+    private String user_name;
+    private String user_password;
+    private String group_name;
 
 //    Initiate class for user everytime someone creates an account
     public User(String user_name, String user_password, String group_name)  {
