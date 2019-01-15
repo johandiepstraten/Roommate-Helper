@@ -40,21 +40,29 @@ public class MainActivity extends AppCompatActivity implements UsersRequest.Call
     public void Login(View view) {
         String username = ((EditText)findViewById(R.id.loginName)).getText().toString();
         String password = ((EditText)findViewById(R.id.loginPassword)).getText().toString();
-        for(int i = 0; i < users.size(); i++)   {
-            User currentUser = users.get(i);
-            String currentUsername = currentUser.getUser_name();
-            if (username.equals(currentUsername))    {
-                String currentPassword = currentUser.getUser_password();
-                if (password.equals(currentPassword))   {
-                    Intent intent = new Intent(MainActivity.this, OverviewActivity.class);
-                    intent.putExtra("loggedInUser", currentUser);
-                    startActivity(intent);
-                } else  {
-                    Toast.makeText(this, "Wrong password", Toast.LENGTH_SHORT).show();
+        Boolean usernameFound = false;
+        if (users.size() > 0)   {
+            for(int i = 0; i < users.size(); i++)   {
+                User currentUser = users.get(i);
+                String currentUsername = currentUser.getUser_name();
+                if (username.equals(currentUsername))    {
+                    String currentPassword = currentUser.getUser_password();
+                    usernameFound = true;
+                    if (password.equals(currentPassword))   {
+                        Log.d("hierhebbenwe", "test" + currentUser);
+
+                        Intent intent = new Intent(MainActivity.this, OverviewActivity.class);
+                        intent.putExtra("loggedInUser", currentUser);
+                        startActivity(intent);
+                    } else  {
+                        Toast.makeText(this, "Wrong password", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }
-        Toast.makeText(this, "Username unknown", Toast.LENGTH_SHORT).show();
+        if (usernameFound == false) {
+            Toast.makeText(this, "Username unknown", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void create_account(View view) {

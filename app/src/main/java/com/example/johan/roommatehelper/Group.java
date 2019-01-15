@@ -5,6 +5,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Group implements Serializable {
+    private int groupId;
     private String groupName;
     private String groupPassword;
     private ArrayList<String> groceryList;
@@ -12,7 +13,8 @@ public class Group implements Serializable {
     private ArrayList<Task> groupTasks;
 
 //    Initiate class object for group when group is created.
-    public Group(String groupName, String groupPassword, ArrayList<String> groceryList, ArrayList<String> groupMembers, ArrayList<Task> groupTasks) {
+    public Group(int groupId, String groupName, String groupPassword, ArrayList<String> groceryList, ArrayList<String> groupMembers, ArrayList<Task> groupTasks) {
+        this.groupId = groupId;
         this.groupName = groupName;
         this.groupPassword = groupPassword;
         this.groceryList = groceryList;
@@ -21,6 +23,11 @@ public class Group implements Serializable {
     }
 
 //    Initiate getters
+
+
+    public int getGroupId() {
+        return groupId;
+    }
 
     public String getGroupName() {
         return groupName;
@@ -43,6 +50,11 @@ public class Group implements Serializable {
     }
 
 //    Initiate setters
+
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;

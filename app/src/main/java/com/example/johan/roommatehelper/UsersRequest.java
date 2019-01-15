@@ -38,10 +38,15 @@ public class UsersRequest implements Response.ErrorListener, Response.Listener<J
         try {
             for (int i = 0; i < response.length(); i++) {
                 JSONObject currentUser = response.getJSONObject(i);
+                int userId = currentUser.getInt("id");
                 String username = currentUser.getString("Username");
+                Log.d("hierhebbenwenaam", username);
                 String password = currentUser.getString("Password");
-                String groupName = currentUser.getString("Group");
-                usersList.add(new User(username, password, groupName));
+                Log.d("hierhebbenweww", password);
+                String groupIdString = currentUser.getString("Group");
+                int groupId = Integer.parseInt(groupIdString);
+                Log.d("hierhebbenwegroup", "" + groupId);
+                usersList.add(new User(userId, username, password, groupId));
             }
         } catch (JSONException e) {
             e.printStackTrace();

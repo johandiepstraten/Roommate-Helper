@@ -35,6 +35,7 @@ public class GroupsRequest implements Response.ErrorListener, Response.Listener<
         try {
             for (int i = 0; i < response.length(); i++) {
                 JSONObject currentGroup = response.getJSONObject(i);
+                int groupId = currentGroup.getInt("id");
                 String groupName = currentGroup.getString("GroupName");
                 String groupPassword = currentGroup.getString("GroupPassword");
                 ArrayList<String> groceryList = new ArrayList<String>();
@@ -55,7 +56,7 @@ public class GroupsRequest implements Response.ErrorListener, Response.Listener<
                     String task = tasks.getString(l);
                     groupTasks.add(task);
                 }
-                groupsList.add(new Group(groupName, groupPassword, groceryList, groupMembers, null));
+                groupsList.add(new Group(groupId, groupName, groupPassword, groceryList, groupMembers, null));
             }
         } catch (JSONException e) {
             e.printStackTrace();

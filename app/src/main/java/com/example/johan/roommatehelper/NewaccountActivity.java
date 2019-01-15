@@ -3,6 +3,7 @@ package com.example.johan.roommatehelper;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,8 +27,9 @@ public class NewaccountActivity extends AppCompatActivity implements PostuserHel
             Toast.makeText(this, "passwords must be the same", Toast.LENGTH_SHORT).show();
         }   else    {
             PostuserHelper helper = new PostuserHelper(username, password, getApplicationContext(), NewaccountActivity.this);
-//            Intent intent = new Intent(NewaccountActivity.this, OverviewActivity.class);
-//            startActivity(intent);
+            Log.d("hierhebbenwe", "" + helper);
+            Intent intent = new Intent(NewaccountActivity.this, MainActivity.class);
+            startActivity(intent);
         }
     }
 //     send user to MainActivity if back button is pressed

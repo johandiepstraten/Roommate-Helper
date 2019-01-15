@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -34,7 +35,7 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
 
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("loggedInUser");
-
+        Log.d("hierhebbenwe", "hebben we" + user);
         GroupsRequest groupRequest = new GroupsRequest(this);
         groupRequest.getGroups(this);
 
@@ -112,7 +113,7 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
                     ArrayList<String> joinedGroup = currentGroup.getGroupMembers();
 //                    PutGroupHelper groupHelper = new PutGroupHelper(currentGroup, getApplicationContext(), JoingroupActivity.this);
                     joinedGroup.add(user.getUser_name());
-                    user.setGroup_name(currentGroup.getGroupName());
+                    user.setGroup_id(currentGroup.getGroupId());
 //                    PutUserHelper userHelper = new PutUserHelper(user, getApplicationContext(), JoingroupActivity.this);
                     Intent intent = new Intent(JoingroupActivity.this, OverviewActivity.class);
                     intent.putExtra("loggedInUser", user);
@@ -127,6 +128,7 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
 
     public void create_group(View view) {
         Intent intent = new Intent(JoingroupActivity.this, CreategroupActivity.class);
+        Log.d("hierhebbenwe", "test");
         intent.putExtra("loggedInUser", user);
         startActivity(intent);
     }

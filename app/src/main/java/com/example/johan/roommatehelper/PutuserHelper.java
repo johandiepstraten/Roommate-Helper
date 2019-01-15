@@ -1,7 +1,6 @@
 package com.example.johan.roommatehelper;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -13,20 +12,19 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PostuserHelper implements Response.ErrorListener, Response.Listener {
+public class PutuserHelper implements Response.ErrorListener, Response.Listener {
     String username;
     String password;
-    CallbackPost activity;
+    CallbackPut activity;
 
     //    request right online json file to put score in
-    public PostuserHelper(String username, String password, Context context, CallbackPost cb) {
+    public PutuserHelper(String username, String password, Context context, CallbackPut cb) {
         this.username = username;
         this.password = password;
         this.activity = cb;
         RequestQueue queue = Volley.newRequestQueue(context);
-        PostRequest request = new PostRequest(Request.Method.POST, "https://ide50-johadiep.legacy.cs50.io:8080/users", this, this);
-        Log.d("hierhebbenwe", "dit is gelukt" + request + username + password + null);
-
+//        id van user moet ook meegegeven worden als 8080/users/userid
+        PutuserHelper.PutRequest request = new PutuserHelper.PutRequest(Request.Method.PUT, "https://ide50-johadiep.legacy.cs50.io:8080/users", this, this);
         queue.add(request);
     }
 
@@ -44,15 +42,16 @@ public class PostuserHelper implements Response.ErrorListener, Response.Listener
     }
 
     //    inform resultactivity with result of request through Callback
-    public interface CallbackPost {
+    public interface CallbackPut {
         void gotHelper(String message);
+
         void gotHelperError(String message);
     }
 
-    public class PostRequest extends StringRequest {
+    public class PutRequest extends StringRequest {
 
         //       Constructor
-        public PostRequest(int method, String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        public PutRequest(int method, String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {
             super(method, url, listener, errorListener);
         }
 
@@ -63,7 +62,7 @@ public class PostuserHelper implements Response.ErrorListener, Response.Listener
             Map<String, String> params = new HashMap<>();
             params.put("Username", username);
             params.put("Password", password);
-            params.put("Group", "0");
+            params.put("Group", null);
             return params;
         }
     }

@@ -30,8 +30,9 @@ public class OverviewActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("loggedInUser");
-        String userGroup = user.getGroup_name();
-        if (userGroup.equals(null)) {
+        int userGroup = user.getGroup_id();
+        Log.d("hierhebbenwe", "hebben we al" + user);
+        if (userGroup == 0) {
             Intent joingroup_intent = new Intent(OverviewActivity.this, JoingroupActivity.class);
             intent.putExtra("loggedInUser", user);
             startActivity(joingroup_intent);
