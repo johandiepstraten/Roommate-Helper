@@ -37,8 +37,6 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-//        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("Create Group");
 
         Intent intent = getIntent();
@@ -46,59 +44,7 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
         String userName = user.getUser_name();
         members = new ArrayList<String>();
         members.add(userName);
-
-//        Drawerlayout = findViewById(R.id.drawer_layout);
-//        NavigationView navigationView = findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(
-//                new NavigationView.OnNavigationItemSelectedListener() {
-//                    @Override
-//                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-//
-////                        Set item as selected to persist highlight.
-//                        menuItem.setChecked(true);
-//
-////                        Close drawer when item is tapped.
-//                        Drawerlayout.closeDrawers();
-//                        int id = menuItem.getItemId();
-//
-////                        Send user to selected activity.
-//                        switch(id)    {
-//                            case R.id.nav_tasks:
-//                                Intent overview_intent = new Intent(CreategroupActivity.this, OverviewActivity.class);
-//                                startActivity(overview_intent);
-//                                break;
-//                            case R.id.nav_group:
-//                                Intent group_intent = new Intent(CreategroupActivity.this, GroupActivity.class);
-//                                startActivity(group_intent);
-//                                break;
-//                            case R.id.nav_shopping:
-//                                Intent shopping_intent = new Intent(CreategroupActivity.this, ShoppingActivity.class);
-//                                startActivity(shopping_intent);
-//                                break;
-//                            case R.id.nav_account:
-//                                Intent account_intent = new Intent(CreategroupActivity.this, AccountActivity.class);
-//                                startActivity(account_intent);
-//                                break;
-//                            case R.id.nav_settings:
-//                                Intent settings_intent = new Intent(CreategroupActivity.this, SettingsActivity.class);
-//                                startActivity(settings_intent);
-//                                break;
-//                        }
-//                        return true;
-//                    }
-//                });
     }
-
-//    Open drawermenu if selected.
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                Drawerlayout.openDrawer(GravityCompat.START);
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
 //    Send user back to JoingroupActivity when back button is pressed
     public void onBackPressed() {
@@ -116,11 +62,6 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
             Toast.makeText(this, "passwords must be the same", Toast.LENGTH_SHORT).show();
         }   else    {
             PostgroupHelper helper = new PostgroupHelper(groupName, groupPassword, members, getApplicationContext(), CreategroupActivity.this);
-//            GroupsRequest groupRequest = new GroupsRequest(this);
-//            groupRequest.getGroups(this);
-//            Toast.makeText(this, "Group created", Toast.LENGTH_SHORT).show();
-//            Intent intent = new Intent(CreategroupActivity.this, OverviewActivity.class);
-//            startActivity(intent);
         }
     }
 
@@ -165,11 +106,11 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
     public void gotHelperError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
+//
+//    @Override
+//    public void onPointerCaptureChanged(boolean hasCapture) {
+//
+//    }
 //    Notify the user that the newly created group is added to its account and send user back to OverviewActivity.
     @Override
     public void gotputHelper(String message) {

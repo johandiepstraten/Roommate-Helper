@@ -8,11 +8,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
+
+    User user;
+    Group group;
     private DrawerLayout Drawerlayout;
 
     @Override
@@ -26,6 +30,10 @@ public class SettingsActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("Settings");
+
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("loggedInUser");
+        group = (Group) intent.getSerializableExtra("loggedInGroup");
 
         Drawerlayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -42,20 +50,27 @@ public class SettingsActivity extends AppCompatActivity {
                         int id = menuItem.getItemId();
                         switch(id)    {
                             case R.id.nav_tasks:
-                                Intent overview_intent = new Intent(SettingsActivity.this, OverviewActivity.class);
-                                startActivity(overview_intent);
+                                Intent overviewIntent = new Intent(SettingsActivity.this, OverviewActivity.class);
+                                overviewIntent.putExtra("loggedInUser", user);
+                                startActivity(overviewIntent);
                                 break;
                             case R.id.nav_group:
-                                Intent group_intent = new Intent(SettingsActivity.this, GroupActivity.class);
-                                startActivity(group_intent);
+                                Intent groupIntent = new Intent(SettingsActivity.this, GroupActivity.class);
+                                groupIntent.putExtra("loggedInUser", user);
+                                groupIntent.putExtra("loggedInGroup", group);
+                                startActivity(groupIntent);
                                 break;
                             case R.id.nav_shopping:
-                                Intent shopping_intent = new Intent(SettingsActivity.this, ShoppingActivity.class);
-                                startActivity(shopping_intent);
+                                Intent shoppingIntent = new Intent(SettingsActivity.this, ShoppingActivity.class);
+                                shoppingIntent.putExtra("loggedInUser", user);
+                                shoppingIntent.putExtra("loggedInGroup", group);
+                                startActivity(shoppingIntent);
                                 break;
                             case R.id.nav_account:
-                                Intent account_intent = new Intent(SettingsActivity.this, AccountActivity.class);
-                                startActivity(account_intent);
+                                Intent accountIntent = new Intent(SettingsActivity.this, AccountActivity.class);
+                                accountIntent.putExtra("loggedInUser", user);
+                                accountIntent.putExtra("loggedInGroup", group);
+                                startActivity(accountIntent);
                                 break;
                             case R.id.nav_settings:
                                 break;
@@ -78,6 +93,7 @@ public class SettingsActivity extends AppCompatActivity {
         Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
     }
     public void onBackPressed() {
-        startActivity(new Intent(SettingsActivity.this, OverviewActivity.class));
-    }
+        Intent intent = new Intent(SettingsActivity.this, OverviewActivity.class);
+        intent.putExtra("loggedInUser", user);
+        startActivity(intent);    }
 }

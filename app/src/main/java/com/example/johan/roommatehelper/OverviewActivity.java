@@ -11,11 +11,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
-public class OverviewActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class OverviewActivity extends AppCompatActivity implements GroupsRequest.Callback {
 
     private DrawerLayout Drawerlayout;
     User user;
+    Group group;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +36,7 @@ public class OverviewActivity extends AppCompatActivity {
         User current_user = (User) intent.getSerializableExtra("loggedInUser");
         user = current_user;
         int userGroup = user.getGroup_id();
-        Log.d("hierhebbenwe", "oerviewactivity hetzelfde?" + current_user);
+        Log.d("hierhebbenwe", "overviewactivity hetzelfde?" + current_user);
         Log.d("hierhebbenwe", "overviewactivity" + user);
         if (userGroup == 0) {
             Intent joingroup_intent = new Intent(OverviewActivity.this, JoingroupActivity.class);
@@ -40,6 +44,9 @@ public class OverviewActivity extends AppCompatActivity {
             Log.d("hierhebbenwe", "overviewactivity2" + user.getUser_name());
             joingroup_intent.putExtra("loggedInUser", user);
             startActivity(joingroup_intent);
+        } else {
+            GroupsRequest groupRequest = new GroupsRequest(this);
+            groupRequest.getGroups(this);
         }
 
         Drawerlayout = findViewById(R.id.drawer_layout);
@@ -57,20 +64,28 @@ public class OverviewActivity extends AppCompatActivity {
                             case R.id.nav_tasks:
                                 break;
                             case R.id.nav_group:
-                                Intent group_intent = new Intent(OverviewActivity.this, GroupActivity.class);
-                                startActivity(group_intent);
+                                Intent groupIntent = new Intent(OverviewActivity.this, GroupActivity.class);
+                                groupIntent.putExtra("loggedInUser", user);
+                                groupIntent.putExtra("loggedInGroup", group);
+                                startActivity(groupIntent);
                                 break;
                             case R.id.nav_shopping:
-                                Intent shopping_intent = new Intent(OverviewActivity.this, ShoppingActivity.class);
-                                startActivity(shopping_intent);
+                                Intent shoppingIntent = new Intent(OverviewActivity.this, ShoppingActivity.class);
+                                shoppingIntent.putExtra("loggedInUser", user);
+                                shoppingIntent.putExtra("loggedInGroup", group);
+                                startActivity(shoppingIntent);
                                 break;
                             case R.id.nav_account:
-                                Intent account_intent = new Intent(OverviewActivity.this, AccountActivity.class);
-                                startActivity(account_intent);
+                                Intent accountIntent = new Intent(OverviewActivity.this, AccountActivity.class);
+                                accountIntent.putExtra("loggedInUser", user);
+                                accountIntent.putExtra("loggedInGroup", group);
+                                startActivity(accountIntent);
                                 break;
                             case R.id.nav_settings:
-                                Intent settings_intent = new Intent(OverviewActivity.this, SettingsActivity.class);
-                                startActivity(settings_intent);
+                                Intent settingsIntent = new Intent(OverviewActivity.this, SettingsActivity.class);
+                                settingsIntent.putExtra("loggedInUser", user);
+                                settingsIntent.putExtra("loggedInGroup", group);
+                                startActivity(settingsIntent);
                                 break;
                         }
                         return true;
@@ -97,5 +112,23 @@ public class OverviewActivity extends AppCompatActivity {
         close.addCategory(Intent.CATEGORY_HOME);
         close.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(close);
+    }
+
+    @Override
+    public void gotGroups(ArrayList<Group> groupsList) {
+        for(int i = 0; i < groupsList.size(); i++)  {
+            Group currentGroup = groupsList.get(i);
+            if(currentGroup.getGroupId() == user.getGroup_id()) {
+                group = currentGroup;
+                Toast.makeText(this, "ready", Toast.LENGTH_LONG).show();
+
+//                HIER VERDERGAAN VOOR HET TOEVOEGEN VAN ADAPTERS ETC.
+            }
+        }
+    }
+
+    @Override
+    public void gotGroupsError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }

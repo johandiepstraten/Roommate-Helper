@@ -16,11 +16,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class JoingroupActivity extends AppCompatActivity implements GroupsRequest.Callback{
+public class JoingroupActivity extends AppCompatActivity implements GroupsRequest.Callback, PutuserHelper.CallbackPut, PutgroupHelper.CallbackPut {
 
 //    Declare variables to be used throughout the activity.
     private DrawerLayout Drawerlayout;
     User user;
+    Group group;
     ArrayList<Group> groups;
 
 //    Set toolbar with title and drawerlayout.
@@ -32,8 +33,6 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-//        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("Join Group");
 
         Intent intent = getIntent();
@@ -41,45 +40,6 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
         Log.d("hierhebbenwe", "Joingroupactivity" + user);
         GroupsRequest groupRequest = new GroupsRequest(this);
         groupRequest.getGroups(this);
-
-//        Drawerlayout = findViewById(R.id.drawer_layout);
-//        NavigationView navigationView = findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(
-//                new NavigationView.OnNavigationItemSelectedListener() {
-//                    @Override
-//                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-//
-////                        Set item as selected to persist highlight.
-//                        menuItem.setChecked(true);
-//
-//                        // close drawer when item is tapped
-//                        Drawerlayout.closeDrawers();
-//                        int id = menuItem.getItemId();
-//                        switch(id)    {
-//                            case R.id.nav_tasks:
-//                                Intent overview_intent = new Intent(JoingroupActivity.this, OverviewActivity.class);
-//                                startActivity(overview_intent);
-//                                break;
-//                            case R.id.nav_group:
-//                                Intent group_intent = new Intent(JoingroupActivity.this, GroupActivity.class);
-//                                startActivity(group_intent);
-//                                break;
-//                            case R.id.nav_shopping:
-//                                Intent shopping_intent = new Intent(JoingroupActivity.this, ShoppingActivity.class);
-//                                startActivity(shopping_intent);
-//                                break;
-//                            case R.id.nav_account:
-//                                Intent account_intent = new Intent(JoingroupActivity.this, AccountActivity.class);
-//                                startActivity(account_intent);
-//                                break;
-//                            case R.id.nav_settings:
-//                                Intent settings_intent = new Intent(JoingroupActivity.this, SettingsActivity.class);
-//                                startActivity(settings_intent);
-//                                break;
-//                        }
-//                        return true;
-//                    }
-//                });
     }
     @Override
     public void gotGroups(ArrayList<Group> groupsList) {
@@ -92,17 +52,9 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
     public void gotGroupsError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                Drawerlayout.openDrawer(GravityCompat.START);
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+
     public void onBackPressed() {
-        startActivity(new Intent(JoingroupActivity.this, GroupActivity.class));
+        startActivity(new Intent(JoingroupActivity.this, MainActivity.class));
     }
 
     public void Join(View view) {
@@ -115,13 +67,10 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
                 String currentGroupPassword = currentGroup.getGroupPassword();
                 if (groupPassword.equals(currentGroupPassword))   {
                     ArrayList<String> joinedGroup = currentGroup.getGroupMembers();
-//                    PutGroupHelper groupHelper = new PutGroupHelper(currentGroup, getApplicationContext(), JoingroupActivity.this);
                     joinedGroup.add(user.getUser_name());
-                    user.setGroup_id(currentGroup.getGroupId());
-//                    PutUserHelper userHelper = new PutUserHelper(user, getApplicationContext(), JoingroupActivity.this);
-                    Intent intent = new Intent(JoingroupActivity.this, OverviewActivity.class);
-                    intent.putExtra("loggedInUser", user);
-                    startActivity(intent);
+                    currentGroup.setGroupMembers(joinedGroup);
+                    group = currentGroup;
+                    PutgroupHelper groupHelper = new PutgroupHelper(currentGroup, getApplicationContext(), JoingroupActivity.this);
                 } else  {
                     Toast.makeText(this, "Wrong password", Toast.LENGTH_SHORT).show();
                 }
@@ -135,5 +84,30 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
         Log.d("hierhebbenwe", " JoingroupActivity test");
         intent.putExtra("loggedInUser", user);
         startActivity(intent);
+    }
+    //    Notify the user that the newly created group is added to its account and send user back to OverviewActivity.
+    @Override
+    public void gotputHelper(String message) {
+        Toast.makeText(this, "User updated", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(JoingroupActivity.this, OverviewActivity.class);
+        intent.putExtra("loggedInUser", user);
+        startActivity(intent);
+    }
+    //    Notify user if something went wrong with assigning the group to its account.
+    @Override
+    public void gotputHelperError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void gotgroupputHelper(String message) {
+        Toast.makeText(this, "Group updated", Toast.LENGTH_SHORT).show();
+        user.setGroup_id(group.getGroupId());
+        PutuserHelper userHelper = new PutuserHelper(user, getApplicationContext(), JoingroupActivity.this);
+    }
+
+    @Override
+    public void gotgroupputHelperError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

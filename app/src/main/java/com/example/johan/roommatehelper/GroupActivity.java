@@ -8,11 +8,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 public class GroupActivity extends AppCompatActivity {
 
+    User user;
+    Group group;
     private DrawerLayout Drawerlayout;
 
 //    Set toolbar with title and drawerlayout.
@@ -27,6 +30,10 @@ public class GroupActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("Group name");
+
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("loggedInUser");
+        group = (Group) intent.getSerializableExtra("loggedInGroup");
 
         Drawerlayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -45,22 +52,29 @@ public class GroupActivity extends AppCompatActivity {
 //                        Send user to selected activity.
                         switch(id)    {
                             case R.id.nav_tasks:
-                                Intent overview_intent = new Intent(GroupActivity.this, OverviewActivity.class);
-                                startActivity(overview_intent);
+                                Intent overviewIntent = new Intent(GroupActivity.this, OverviewActivity.class);
+                                overviewIntent.putExtra("loggedInUser", user);
+                                startActivity(overviewIntent);
                                 break;
                             case R.id.nav_group:
                                 break;
                             case R.id.nav_shopping:
-                                Intent shopping_intent = new Intent(GroupActivity.this, ShoppingActivity.class);
-                                startActivity(shopping_intent);
+                                Intent shoppingIntent = new Intent(GroupActivity.this, ShoppingActivity.class);
+                                shoppingIntent.putExtra("loggedInUser", user);
+                                shoppingIntent.putExtra("loggedInGroup", group);
+                                startActivity(shoppingIntent);
                                 break;
                             case R.id.nav_account:
-                                Intent account_intent = new Intent(GroupActivity.this, AccountActivity.class);
-                                startActivity(account_intent);
+                                Intent accountIntent = new Intent(GroupActivity.this, AccountActivity.class);
+                                accountIntent.putExtra("loggedInUser", user);
+                                accountIntent.putExtra("loggedInGroup", group);
+                                startActivity(accountIntent);
                                 break;
                             case R.id.nav_settings:
-                                Intent settings_intent = new Intent(GroupActivity.this, SettingsActivity.class);
-                                startActivity(settings_intent);
+                                Intent settingsIntent = new Intent(GroupActivity.this, SettingsActivity.class);
+                                settingsIntent.putExtra("loggedInUser", user);
+                                settingsIntent.putExtra("loggedInGroup", group);
+                                startActivity(settingsIntent);
                                 break;
                         }
                         return true;
@@ -87,9 +101,11 @@ public class GroupActivity extends AppCompatActivity {
 
 //    Send user to OverviewActivity if back button is pressed.
     public void onBackPressed() {
-        startActivity(new Intent(GroupActivity.this, OverviewActivity.class));
+        Intent intent = new Intent(GroupActivity.this, OverviewActivity.class);
+        intent.putExtra("loggedInUser", user);
+        startActivity(intent);
     }
-//
+
 //    Send user to JongroupActiviity if button is pressed.
     public void joingroup(View view) {
         Intent intent = new Intent(GroupActivity.this, JoingroupActivity.class);

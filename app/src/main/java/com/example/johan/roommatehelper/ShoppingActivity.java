@@ -8,11 +8,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 public class ShoppingActivity extends AppCompatActivity {
 
+    User user;
+    Group group;
     private DrawerLayout Drawerlayout;
 
     @Override
@@ -25,8 +28,11 @@ public class ShoppingActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
-        actionbar.setTitle("Shopping List");
+        actionbar.setTitle("Groceries List");
 
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("loggedInUser");
+        group = (Group) intent.getSerializableExtra("loggedInGroup");
 
         Drawerlayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -43,22 +49,29 @@ public class ShoppingActivity extends AppCompatActivity {
                         int id = menuItem.getItemId();
                         switch(id)    {
                             case R.id.nav_tasks:
-                                Intent overview_intent = new Intent(ShoppingActivity.this, OverviewActivity.class);
-                                startActivity(overview_intent);
+                                Intent overviewIntent = new Intent(ShoppingActivity.this, OverviewActivity.class);
+                                overviewIntent.putExtra("loggedInUser", user);
+                                startActivity(overviewIntent);
                                 break;
                             case R.id.nav_group:
-                                Intent group_intent = new Intent(ShoppingActivity.this, GroupActivity.class);
-                                startActivity(group_intent);
+                                Intent groupIntent = new Intent(ShoppingActivity.this, GroupActivity.class);
+                                groupIntent.putExtra("loggedInUser", user);
+                                groupIntent.putExtra("loggedInGroup", group);
+                                startActivity(groupIntent);
                                 break;
                             case R.id.nav_shopping:
                                 break;
                             case R.id.nav_account:
-                                Intent account_intent = new Intent(ShoppingActivity.this, AccountActivity.class);
-                                startActivity(account_intent);
+                                Intent accountIntent = new Intent(ShoppingActivity.this, AccountActivity.class);
+                                accountIntent.putExtra("loggedInUser", user);
+                                accountIntent.putExtra("loggedInGroup", group);
+                                startActivity(accountIntent);
                                 break;
                             case R.id.nav_settings:
-                                Intent settings_intent = new Intent(ShoppingActivity.this, SettingsActivity.class);
-                                startActivity(settings_intent);
+                                Intent settingsIntent = new Intent(ShoppingActivity.this, SettingsActivity.class);
+                                settingsIntent.putExtra("loggedInUser", user);
+                                settingsIntent.putExtra("loggedInGroup", group);
+                                startActivity(settingsIntent);
                                 break;
                         }
                         return true;
@@ -80,7 +93,9 @@ public class ShoppingActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void onBackPressed() {
-        startActivity(new Intent(ShoppingActivity.this, OverviewActivity.class));
+        Intent intent = new Intent(ShoppingActivity.this, OverviewActivity.class);
+        intent.putExtra("loggedInUser", user);
+        startActivity(intent);
     }
 }
 

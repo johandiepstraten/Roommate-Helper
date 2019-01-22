@@ -8,10 +8,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 public class AccountActivity extends AppCompatActivity {
+
+    Group group;
+    User user;
     private DrawerLayout Drawerlayout;
 
     @Override
@@ -26,6 +30,10 @@ public class AccountActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("My Account");
+
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("loggedInUser");
+        group = (Group) intent.getSerializableExtra("loggedInGroup");
 
         Drawerlayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -44,22 +52,29 @@ public class AccountActivity extends AppCompatActivity {
 //                        Send user to selected activity.
                         switch(id)    {
                             case R.id.nav_tasks:
-                                Intent overview_intent = new Intent(AccountActivity.this, OverviewActivity.class);
-                                startActivity(overview_intent);
+                                Intent overviewIntent = new Intent(AccountActivity.this, OverviewActivity.class);
+                                overviewIntent.putExtra("loggedInUser", user);
+                                startActivity(overviewIntent);
                                 break;
                             case R.id.nav_group:
-                                Intent group_intent = new Intent(AccountActivity.this, GroupActivity.class);
-                                startActivity(group_intent);
+                                Intent groupIntent = new Intent(AccountActivity.this, GroupActivity.class);
+                                groupIntent.putExtra("loggedInUser", user);
+                                groupIntent.putExtra("loggedInGroup", group);
+                                startActivity(groupIntent);
                                 break;
                             case R.id.nav_shopping:
-                                Intent shopping_intent = new Intent(AccountActivity.this, ShoppingActivity.class);
-                                startActivity(shopping_intent);
+                                Intent shoppingIntent = new Intent(AccountActivity.this, ShoppingActivity.class);
+                                shoppingIntent.putExtra("loggedInUser", user);
+                                shoppingIntent.putExtra("loggedInGroup", group);
+                                startActivity(shoppingIntent);
                                 break;
                             case R.id.nav_account:
                                 break;
                             case R.id.nav_settings:
-                                Intent settings_intent = new Intent(AccountActivity.this, SettingsActivity.class);
-                                startActivity(settings_intent);
+                                Intent settingsIntent = new Intent(AccountActivity.this, SettingsActivity.class);
+                                settingsIntent.putExtra("loggedInUser", user);
+                                settingsIntent.putExtra("loggedInGroup", group);
+                                startActivity(settingsIntent);
                                 break;
                         }
                         return true;
@@ -86,6 +101,8 @@ public class AccountActivity extends AppCompatActivity {
 
 //    Send user back to OverviewActivity if backbutton is pressed.
     public void onBackPressed() {
-        startActivity(new Intent(AccountActivity.this, OverviewActivity.class));
+        Intent intent = new Intent(AccountActivity.this, OverviewActivity.class);
+        intent.putExtra("loggedInUser", user);
+        startActivity(intent);
     }
 }

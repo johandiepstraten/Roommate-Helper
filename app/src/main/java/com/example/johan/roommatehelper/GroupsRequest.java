@@ -79,7 +79,13 @@ public class GroupsRequest implements Response.ErrorListener, Response.Listener<
     public interface Callback {
         void gotGroups(ArrayList<Group> groupsList);
         void gotGroupsError(String message);
-    }
+
+    //    Notify the user that the newly created group is added to its account and send user back to OverviewActivity.
+//    void gotputHelper(String message);
+
+    //    Notify user if something went wrong with assigning the group to its account.
+//    void gotputHelperError(String message);
+}
 //    get jsonarray from right url
     void getGroups(Callback activity)   {
         RequestQueue queue = Volley.newRequestQueue(context);
