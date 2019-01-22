@@ -38,3 +38,32 @@ If the user is not in a group yet it can join an existing group or create a new 
 Groups will have a unique name and password as well.
 I created a server with the CS50 IDE.
 I am figuring out how to store user data in an online json file so that users can create an account and use this account to log in. 
+
+# day 6
+
+Today I wrote all code to post and request data for users and groups from the online json file.
+Due to a problem with an updated version of android I couldn't run the app with these new functionalities on my phone yet.
+Therefore I'm afraid it will be a bit buggy tomorrow.
+
+# day 7
+
+Today I managed to get the app running on my phone.
+I spent most of the day debugging small irregulaties in my code.
+It's a slow but steady process with good perspective.
+I decided to put the group_id in the user class instead of the group name. This way multiple groups can have the same name.
+users without a group will get group_id 0 because the API won't assign that id number. This way all users with no group will be sent to the "join group activity" where they can join an existing group or create a new one.
+I also decided that a each group class will contain a list with user_id's. This is more error proof than the usage of usernames.
+Lastly I'm having some troubles with passing on the class of the logged in user by intents between all activities.
+
+# day 8
+
+Eye surgery.
+Sick day because of surgery.
+
+# day 9
+
+Rehabilitating from eye surgery.
+
+# day 10
+
+Rehabilitating from eye surgery.
