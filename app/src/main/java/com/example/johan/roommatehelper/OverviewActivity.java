@@ -29,12 +29,16 @@ public class OverviewActivity extends AppCompatActivity {
         actionbar.setTitle("My Tasks");
 
         Intent intent = getIntent();
-        user = (User) intent.getSerializableExtra("loggedInUser");
+        User current_user = (User) intent.getSerializableExtra("loggedInUser");
+        user = current_user;
         int userGroup = user.getGroup_id();
-        Log.d("hierhebbenwe", "hebben we al" + user);
+        Log.d("hierhebbenwe", "oerviewactivity hetzelfde?" + current_user);
+        Log.d("hierhebbenwe", "overviewactivity" + user);
         if (userGroup == 0) {
             Intent joingroup_intent = new Intent(OverviewActivity.this, JoingroupActivity.class);
-            intent.putExtra("loggedInUser", user);
+            Log.d("hierhebbenwe", "oerviewactivity2 hetzelfde?" + current_user);
+            Log.d("hierhebbenwe", "overviewactivity2" + user.getUser_name());
+            joingroup_intent.putExtra("loggedInUser", user);
             startActivity(joingroup_intent);
         }
 

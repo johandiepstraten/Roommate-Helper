@@ -15,6 +15,7 @@ import android.widget.Toast;
 public class AdditemActivity extends AppCompatActivity {
     private DrawerLayout Drawerlayout;
 
+//    Set toolbar with title and drawerlayout.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,12 +36,14 @@ public class AdditemActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                        // set item as selected to persist highlight
+//                        Set item as selected to persist highlight.
                         menuItem.setChecked(true);
 
-                        // close drawer when item is tapped
+//                        Close drawer when item is tapped.
                         Drawerlayout.closeDrawers();
                         int id = menuItem.getItemId();
+
+//                        Send user to selected activity.
                         switch(id)    {
                             case R.id.nav_tasks:
                                 Intent overview_intent = new Intent(AdditemActivity.this, OverviewActivity.class);
@@ -67,6 +70,8 @@ public class AdditemActivity extends AppCompatActivity {
                     }
                 });
     }
+
+//    Open drawermenu if selected.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -77,9 +82,12 @@ public class AdditemActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+//    Add input of user as new item to the grocery list.
     public void addnewitem(View view) {
         Toast.makeText(this, "Item added to shopping list", Toast.LENGTH_SHORT).show();
     }
+
+//    Send user back to ShoppingActivity if back button is pressed.
     public void onBackPressed() {
         startActivity(new Intent(AdditemActivity.this, ShoppingActivity.class));
     }

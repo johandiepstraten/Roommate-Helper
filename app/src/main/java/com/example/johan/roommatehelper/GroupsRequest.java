@@ -1,6 +1,7 @@
 package com.example.johan.roommatehelper;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -14,7 +15,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+//  Request all groups from online JSON file.
 public class GroupsRequest implements Response.ErrorListener, Response.Listener<JSONArray> {
+
+//    Declare variables to be used throughout the activity.
     private Context context;
     Callback activity;
 
@@ -23,7 +27,7 @@ public class GroupsRequest implements Response.ErrorListener, Response.Listener<
     }
     @Override
 
-//    forward possible error message
+//    Forward possible error message.
     public void onErrorResponse(VolleyError error) {
         activity.gotGroupsError(error.getMessage());
     }
@@ -31,7 +35,7 @@ public class GroupsRequest implements Response.ErrorListener, Response.Listener<
     public void onResponse(JSONArray response) {
         ArrayList<Group> groupsList = new ArrayList<Group>();
 
-//        extract all needed values from JsonObject and make Group object for each group
+//        Extract all needed values from JsonObject and make Group object for each group.
         try {
             for (int i = 0; i < response.length(); i++) {
                 JSONObject currentGroup = response.getJSONObject(i);
@@ -39,37 +43,44 @@ public class GroupsRequest implements Response.ErrorListener, Response.Listener<
                 String groupName = currentGroup.getString("GroupName");
                 String groupPassword = currentGroup.getString("GroupPassword");
                 ArrayList<String> groceryList = new ArrayList<String>();
-                JSONArray groceries = currentGroup.getJSONArray("GroupGroceries");
-                for (int j = 0; j < groceries.length(); j++) {
-                    String grocery = groceries.getString(j);
+//                DIT GAAT MIS, DE ARRAYS STAAN ER IN ALS STRINGS, ZE MOETEN ER OF ALS ARRAYLIST IN OF DE STRING MOET MMAKKELIJK NAAR ARRAYLIST GECONVERT WORDEN.
+                String groceries = currentGroup.getString("GroupGroceries");
+                JSONArray groceriesArray = new JSONArray(groceries);
+                for (int j = 0; j < groceriesArray.length(); j++) {
+                    String grocery = groceriesArray.getString(j);
                     groceryList.add(grocery);
                 }
                 ArrayList<String> groupMembers = new ArrayList<String>();
-                JSONArray members = currentGroup.getJSONArray("GroupMembers");
-                for (int k = 0; k < members.length(); k++) {
-                    String member = members.getString(k);
+                String members = currentGroup.getString("GroupMembers");
+                JSONArray membersArray = new JSONArray(members);
+
+                for (int k = 0; k < membersArray.length(); k++) {
+                    String member = membersArray.getString(k);
                     groupMembers.add(member);
                 }
                 ArrayList<String> groupTasks = new ArrayList<String>();
-                JSONArray tasks = currentGroup.getJSONArray("GroupTasks");
-                for (int l = 0; l < tasks.length(); l++) {
-                    String task = tasks.getString(l);
+                String tasks = currentGroup.getString("GroupTasks");
+                JSONArray tasksArray = new JSONArray(tasks);
+                for (int l = 0; l < tasksArray.length(); l++) {
+                    String task = tasksArray.getString(l);
                     groupTasks.add(task);
                 }
                 groupsList.add(new Group(groupId, groupName, groupPassword, groceryList, groupMembers, null));
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.d("hierhebbenwe", "GroupsRequest fout" + e);
         }
-//        send list to callback
+//        Send list to callback.
+        Log.d("hierhebbenwe", "GroupsRequest we gaan naar gotGroups");
         activity.gotGroups(groupsList);
     }
-    //    Send result of request back to HighscoreActivity
+//    Send list of groups or error message back to activity that sent the request.
     public interface Callback {
         void gotGroups(ArrayList<Group> groupsList);
         void gotGroupsError(String message);
     }
-    //    get jsonarray from right url
+//    get jsonarray from right url
     void getGroups(Callback activity)   {
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest("https://ide50-johadiep.legacy.cs50.io:8080/groups", this, this);

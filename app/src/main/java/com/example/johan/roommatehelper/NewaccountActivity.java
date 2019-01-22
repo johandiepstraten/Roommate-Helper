@@ -27,9 +27,6 @@ public class NewaccountActivity extends AppCompatActivity implements PostuserHel
             Toast.makeText(this, "passwords must be the same", Toast.LENGTH_SHORT).show();
         }   else    {
             PostuserHelper helper = new PostuserHelper(username, password, getApplicationContext(), NewaccountActivity.this);
-            Log.d("hierhebbenwe", "" + helper);
-            Intent intent = new Intent(NewaccountActivity.this, MainActivity.class);
-            startActivity(intent);
         }
     }
 //     send user to MainActivity if back button is pressed
@@ -39,7 +36,8 @@ public class NewaccountActivity extends AppCompatActivity implements PostuserHel
 //    if submit was succesfull send user to OverviewActivity
     @Override
     public void gotHelper(String message) {
-        startActivity(new Intent(NewaccountActivity.this, OverviewActivity.class));
+        Toast.makeText(this, "Acoount created, please log in", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(NewaccountActivity.this, MainActivity.class));
     }
 //    show user possible error message
     @Override

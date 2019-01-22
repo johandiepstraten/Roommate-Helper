@@ -16,6 +16,7 @@ public class EditaccountActivity extends AppCompatActivity {
 
     private DrawerLayout Drawerlayout;
 
+//    Set toolbar with title and drawerlayout.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,12 +36,14 @@ public class EditaccountActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                        // set item as selected to persist highlight
+//                        Set item as selected to persist highlight.
                         menuItem.setChecked(true);
 
-                        // close drawer when item is tapped
+//                        Close drawer when item is tapped.
                         Drawerlayout.closeDrawers();
                         int id = menuItem.getItemId();
+
+//                        Send user to selected activity.
                         switch(id)    {
                             case R.id.nav_tasks:
                                 Intent overview_intent = new Intent(EditaccountActivity.this, OverviewActivity.class);
@@ -67,6 +70,8 @@ public class EditaccountActivity extends AppCompatActivity {
                     }
                 });
     }
+
+//    Open drawermenu if selected.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -77,9 +82,13 @@ public class EditaccountActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+//    Update user object if save button is clicked.
     public void saveaccount(View view) {
+
         Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
     }
+
+//    Send user to AccountActivity if backbutton is pressed.
     public void onBackPressed() {
         startActivity(new Intent(EditaccountActivity.this, AccountActivity.class));
     }

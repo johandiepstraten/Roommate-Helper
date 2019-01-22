@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements UsersRequest.Call
                     String currentPassword = currentUser.getUser_password();
                     usernameFound = true;
                     if (password.equals(currentPassword))   {
-                        Log.d("hierhebbenwe", "test" + currentUser);
+                        Log.d("hierhebbenwe", "mainactivity" + currentUser);
 
                         Intent intent = new Intent(MainActivity.this, OverviewActivity.class);
                         intent.putExtra("loggedInUser", currentUser);

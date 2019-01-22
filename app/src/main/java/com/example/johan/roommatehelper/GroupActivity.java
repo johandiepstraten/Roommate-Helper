@@ -15,6 +15,7 @@ public class GroupActivity extends AppCompatActivity {
 
     private DrawerLayout Drawerlayout;
 
+//    Set toolbar with title and drawerlayout.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +35,14 @@ public class GroupActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                        // set item as selected to persist highlight
+//                        Set item as selected to persist highlight.
                         menuItem.setChecked(true);
 
-                        // close drawer when item is tapped
+//                        Close drawer when item is tapped.
                         Drawerlayout.closeDrawers();
                         int id = menuItem.getItemId();
+
+//                        Send user to selected activity.
                         switch(id)    {
                             case R.id.nav_tasks:
                                 Intent overview_intent = new Intent(GroupActivity.this, OverviewActivity.class);
@@ -64,6 +67,8 @@ public class GroupActivity extends AppCompatActivity {
                     }
                 });
     }
+
+//    Open drawermenu if selected.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -74,14 +79,18 @@ public class GroupActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+//    Send user to TasksviewActivity if button is selected.
     public void tasksview(View view) {
         Intent intent = new Intent(GroupActivity.this, TasksviewActivity.class);
         startActivity(intent);
     }
+
+//    Send user to OverviewActivity if back button is pressed.
     public void onBackPressed() {
         startActivity(new Intent(GroupActivity.this, OverviewActivity.class));
     }
-
+//
+//    Send user to JongroupActiviity if button is pressed.
     public void joingroup(View view) {
         Intent intent = new Intent(GroupActivity.this, JoingroupActivity.class);
         startActivity(intent);

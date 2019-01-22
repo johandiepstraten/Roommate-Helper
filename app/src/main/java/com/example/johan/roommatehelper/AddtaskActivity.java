@@ -15,6 +15,7 @@ import android.widget.Toast;
 public class AddtaskActivity extends AppCompatActivity {
     private DrawerLayout Drawerlayout;
 
+//    Set toolbar with title and drawerlayout.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +35,14 @@ public class AddtaskActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                        // set item as selected to persist highlight
+//                        Set item as selected to persist highlight.
                         menuItem.setChecked(true);
 
-                        // close drawer when item is tapped
+//                        Close drawer when item is tapped.
                         Drawerlayout.closeDrawers();
                         int id = menuItem.getItemId();
+
+//                        Send user to selected activity.
                         switch(id)    {
                             case R.id.nav_tasks:
                                 Intent overview_intent = new Intent(AddtaskActivity.this, OverviewActivity.class);
@@ -66,6 +69,8 @@ public class AddtaskActivity extends AppCompatActivity {
                     }
                 });
     }
+
+//    Open drawermenu if selected.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -76,9 +81,12 @@ public class AddtaskActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+//    Add input of user as new task to the task list.
     public void addnewtask(View view) {
         Toast.makeText(this, "Task added", Toast.LENGTH_SHORT).show();
     }
+
+//    Send user to TasksviewActivity when back button is pressed.
     public void onBackPressed() {
         startActivity(new Intent(AddtaskActivity.this, TasksviewActivity.class));
     }

@@ -19,6 +19,7 @@ public class AccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
 
+//        Set up toolbar with title and drawerlayout.
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -33,12 +34,14 @@ public class AccountActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                        // set item as selected to persist highlight
+//                        Set item as selected to persist highlight.
                         menuItem.setChecked(true);
 
-                        // close drawer when item is tapped
+//                        Close drawer when item is tapped.
                         Drawerlayout.closeDrawers();
                         int id = menuItem.getItemId();
+
+//                        Send user to selected activity.
                         switch(id)    {
                             case R.id.nav_tasks:
                                 Intent overview_intent = new Intent(AccountActivity.this, OverviewActivity.class);
@@ -63,6 +66,8 @@ public class AccountActivity extends AppCompatActivity {
                     }
                 });
     }
+
+//    Open drawermenu if selected by user.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -73,10 +78,13 @@ public class AccountActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+//    Send user to EditaccountActivity if selected.
     public void editaccount(View view) {
         Intent intent = new Intent(AccountActivity.this, EditaccountActivity.class);
         startActivity(intent);
     }
+
+//    Send user back to OverviewActivity if backbutton is pressed.
     public void onBackPressed() {
         startActivity(new Intent(AccountActivity.this, OverviewActivity.class));
     }

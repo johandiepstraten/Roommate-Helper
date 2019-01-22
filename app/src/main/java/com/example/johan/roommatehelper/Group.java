@@ -22,12 +22,8 @@ public class Group implements Serializable {
         this.groupTasks = groupTasks;
     }
 
-//    Initiate getters
-
-
-    public int getGroupId() {
-        return groupId;
-    }
+//    Initiate getters.
+    public int getGroupId() { return groupId; }
 
     public String getGroupName() {
         return groupName;
@@ -49,29 +45,22 @@ public class Group implements Serializable {
         return groupTasks;
     }
 
-//    Initiate setters
-
-
+//    Initiate setters.
     public void setGroupId(int groupId) {
         this.groupId = groupId;
     }
-
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
-
     public void setGroupPassword(String groupPassword) {
         this.groupPassword = groupPassword;
     }
-
     public void setGroceryList(ArrayList<String> groceryList) {
         this.groceryList = groceryList;
     }
-
     public void setGroupMembers(ArrayList<String> groupMembers) {
         this.groupMembers = groupMembers;
     }
-
     public void setGroupTasks(ArrayList<Task> groupTasks) {
         this.groupTasks = groupTasks;
     }
