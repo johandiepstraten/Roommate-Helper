@@ -34,7 +34,7 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/addshopButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

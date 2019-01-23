@@ -11,11 +11,18 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class ShoppingActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class ShoppingActivity extends AppCompatActivity implements PutgroupHelper.CallbackPut {
 
     User user;
     Group group;
+    String removedGrocery;
     private DrawerLayout Drawerlayout;
 
     @Override
@@ -28,11 +35,36 @@ public class ShoppingActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
-        actionbar.setTitle("Groceries List");
+        actionbar.setTitle("Grocery List");
 
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("loggedInUser");
         group = (Group) intent.getSerializableExtra("loggedInGroup");
+        final ArrayList listedGroceries = group.getGroceryList();
+        if(listedGroceries.size() == 0) {
+            TextView groceryInfo = findViewById(R.id.groceryInfo);
+            groceryInfo.setText("No groceries at the moment.");
+        }
+
+        ShoppingAdapter adapter = new ShoppingAdapter(this, R.layout.row_grocery, listedGroceries);
+        ListView listView = findViewById(R.id.shopView);
+        listView.setAdapter(adapter);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                removedGrocery = listedGroceries.get(position).toString();
+                Log.d("hierhebbenwe", "shoppingactivity longclick1" + listedGroceries);
+                listedGroceries.remove(position);
+                group.setGroceryList(listedGroceries);
+                PutgroupHelper groupHelper = new PutgroupHelper(group, getApplicationContext(), ShoppingActivity.this);
+                Log.d("hierhebbenwe", "shoppingactivity longclick2" + listedGroceries);
+                Log.d("hierhebbenwe", "shoppingactivity longclick3" + group.getGroceryList());
+
+
+                return false;
+            }
+        });
+
 
         Drawerlayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -90,12 +122,28 @@ public class ShoppingActivity extends AppCompatActivity {
 
     public void additem(View view) {
         Intent intent = new Intent(ShoppingActivity.this, AdditemActivity.class);
+        intent.putExtra("loggedInUser", user);
+        intent.putExtra("loggedInGroup", group);
         startActivity(intent);
     }
     public void onBackPressed() {
         Intent intent = new Intent(ShoppingActivity.this, OverviewActivity.class);
         intent.putExtra("loggedInUser", user);
         startActivity(intent);
+    }
+
+    @Override
+    public void gotgroupputHelper(String message) {
+        Toast.makeText(this, "You bought " + removedGrocery, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(ShoppingActivity.this, ShoppingActivity.class);
+        intent.putExtra("loggedInUser", user);
+        intent.putExtra("loggedInGroup", group);
+        startActivity(intent);
+    }
+
+    @Override
+    public void gotgroupputHelperError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
 

@@ -9,12 +9,12 @@
             android:title="Group" />
         <item
             android:id="@+id/nav_shopping"
-            android:title="Shopping List" />
+            android:title="Groceries" />
         <item
             android:id="@+id/nav_account"
             android:title="My Account" />
         <item
             android:id="@+id/nav_settings"
-            android:title="Settings" />
+            android:title="Info" />
     </group>
 </menu>

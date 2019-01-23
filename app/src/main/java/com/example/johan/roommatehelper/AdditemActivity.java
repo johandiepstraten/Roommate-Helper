@@ -10,9 +10,16 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
-public class AdditemActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class AdditemActivity extends AppCompatActivity implements PutgroupHelper.CallbackPut {
+
+    Group group;
+    User user;
+    String newItem;
     private DrawerLayout Drawerlayout;
 
 //    Set toolbar with title and drawerlayout.
@@ -28,6 +35,9 @@ public class AdditemActivity extends AppCompatActivity {
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("Add Item");
 
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("loggedInUser");
+        group = (Group) intent.getSerializableExtra("loggedInGroup");
 
         Drawerlayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -46,24 +56,33 @@ public class AdditemActivity extends AppCompatActivity {
 //                        Send user to selected activity.
                         switch(id)    {
                             case R.id.nav_tasks:
-                                Intent overview_intent = new Intent(AdditemActivity.this, OverviewActivity.class);
-                                startActivity(overview_intent);
+                                Intent overviewIntent = new Intent(AdditemActivity.this, OverviewActivity.class);
+                                overviewIntent.putExtra("loggedInUser", user);
+                                startActivity(overviewIntent);
                                 break;
                             case R.id.nav_group:
-                                Intent group_intent = new Intent(AdditemActivity.this, GroupActivity.class);
-                                startActivity(group_intent);
+                                Intent groupIntent = new Intent(AdditemActivity.this, GroupActivity.class);
+                                groupIntent.putExtra("loggedInUser", user);
+                                groupIntent.putExtra("loggedInGroup", group);
+                                startActivity(groupIntent);
                                 break;
                             case R.id.nav_shopping:
-                                Intent shopping_intent = new Intent(AdditemActivity.this, ShoppingActivity.class);
-                                startActivity(shopping_intent);
+                                Intent shoppingIntent = new Intent(AdditemActivity.this, ShoppingActivity.class);
+                                shoppingIntent.putExtra("loggedInUser", user);
+                                shoppingIntent.putExtra("loggedInGroup", group);
+                                startActivity(shoppingIntent);
                                 break;
                             case R.id.nav_account:
-                                Intent account_intent = new Intent(AdditemActivity.this, AccountActivity.class);
-                                startActivity(account_intent);
+                                Intent accountIntent = new Intent(AdditemActivity.this, AccountActivity.class);
+                                accountIntent.putExtra("loggedInUser", user);
+                                accountIntent.putExtra("loggedInGroup", group);
+                                startActivity(accountIntent);
                                 break;
                             case R.id.nav_settings:
-                                Intent settings_intent = new Intent(AdditemActivity.this, SettingsActivity.class);
-                                startActivity(settings_intent);
+                                Intent settingsIntent = new Intent(AdditemActivity.this, SettingsActivity.class);
+                                settingsIntent.putExtra("loggedInUser", user);
+                                settingsIntent.putExtra("loggedInGroup", group);
+                                startActivity(settingsIntent);
                                 break;
                         }
                         return true;
@@ -84,11 +103,28 @@ public class AdditemActivity extends AppCompatActivity {
 
 //    Add input of user as new item to the grocery list.
     public void addnewitem(View view) {
-        Toast.makeText(this, "Item added to shopping list", Toast.LENGTH_SHORT).show();
-    }
+        newItem = ((EditText)findViewById(R.id.addGroceries)).getText().toString();
+        ArrayList groceryList = group.getGroceryList();
+        groceryList.add(newItem);
+        PutgroupHelper groupHelper = new PutgroupHelper(group, getApplicationContext(), AdditemActivity.this);
+        }
 
 //    Send user back to ShoppingActivity if back button is pressed.
     public void onBackPressed() {
-        startActivity(new Intent(AdditemActivity.this, ShoppingActivity.class));
+        Intent shoppingIntent = new Intent(AdditemActivity.this, ShoppingActivity.class);
+        shoppingIntent.putExtra("loggedInUser", user);
+        shoppingIntent.putExtra("loggedInGroup", group);
+        startActivity(shoppingIntent);    }
+
+    @Override
+    public void gotgroupputHelper(String message) {
+        Toast.makeText(this, newItem + " added to shopping list", Toast.LENGTH_SHORT).show();
+        EditText groceryItem = findViewById(R.id.addGroceries);
+        groceryItem.getText().clear();
+    }
+
+    @Override
+    public void gotgroupputHelperError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
