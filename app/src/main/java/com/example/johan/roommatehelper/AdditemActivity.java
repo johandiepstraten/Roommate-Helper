@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class AdditemActivity extends AppCompatActivity implements PutgroupHelper.CallbackPut {
 
+//    Declare variables to be used throughout activity.
     Group group;
     User user;
     String newItem;
@@ -35,6 +36,7 @@ public class AdditemActivity extends AppCompatActivity implements PutgroupHelper
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("Add Item");
 
+//        Get info about current user and group.
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("loggedInUser");
         group = (Group) intent.getSerializableExtra("loggedInGroup");
@@ -56,30 +58,35 @@ public class AdditemActivity extends AppCompatActivity implements PutgroupHelper
 //                        Send user to selected activity.
                         switch(id)    {
                             case R.id.nav_tasks:
-                                Intent overviewIntent = new Intent(AdditemActivity.this, OverviewActivity.class);
+                                Intent overviewIntent = new Intent(AdditemActivity.this,
+                                        OverviewActivity.class);
                                 overviewIntent.putExtra("loggedInUser", user);
                                 startActivity(overviewIntent);
                                 break;
                             case R.id.nav_group:
-                                Intent groupIntent = new Intent(AdditemActivity.this, GroupActivity.class);
+                                Intent groupIntent = new Intent(AdditemActivity.this,
+                                        GroupActivity.class);
                                 groupIntent.putExtra("loggedInUser", user);
                                 groupIntent.putExtra("loggedInGroup", group);
                                 startActivity(groupIntent);
                                 break;
                             case R.id.nav_shopping:
-                                Intent shoppingIntent = new Intent(AdditemActivity.this, ShoppingActivity.class);
+                                Intent shoppingIntent = new Intent(AdditemActivity.this,
+                                        ShoppingActivity.class);
                                 shoppingIntent.putExtra("loggedInUser", user);
                                 shoppingIntent.putExtra("loggedInGroup", group);
                                 startActivity(shoppingIntent);
                                 break;
                             case R.id.nav_account:
-                                Intent accountIntent = new Intent(AdditemActivity.this, AccountActivity.class);
+                                Intent accountIntent = new Intent(AdditemActivity.this,
+                                        AccountActivity.class);
                                 accountIntent.putExtra("loggedInUser", user);
                                 accountIntent.putExtra("loggedInGroup", group);
                                 startActivity(accountIntent);
                                 break;
                             case R.id.nav_settings:
-                                Intent settingsIntent = new Intent(AdditemActivity.this, SettingsActivity.class);
+                                Intent settingsIntent = new Intent(AdditemActivity.this,
+                                        SettingsActivity.class);
                                 settingsIntent.putExtra("loggedInUser", user);
                                 settingsIntent.putExtra("loggedInGroup", group);
                                 startActivity(settingsIntent);
@@ -106,7 +113,8 @@ public class AdditemActivity extends AppCompatActivity implements PutgroupHelper
         newItem = ((EditText)findViewById(R.id.addGroceries)).getText().toString();
         ArrayList groceryList = group.getGroceryList();
         groceryList.add(newItem);
-        PutgroupHelper groupHelper = new PutgroupHelper(group, getApplicationContext(), AdditemActivity.this);
+        PutgroupHelper groupHelper = new PutgroupHelper(group, getApplicationContext(),
+                AdditemActivity.this);
         }
 
 //    Send user back to ShoppingActivity if back button is pressed.
@@ -116,6 +124,7 @@ public class AdditemActivity extends AppCompatActivity implements PutgroupHelper
         shoppingIntent.putExtra("loggedInGroup", group);
         startActivity(shoppingIntent);    }
 
+//    Tell user that item is added and clear edittext views.
     @Override
     public void gotgroupputHelper(String message) {
         Toast.makeText(this, newItem + " added to shopping list", Toast.LENGTH_SHORT).show();
@@ -123,6 +132,7 @@ public class AdditemActivity extends AppCompatActivity implements PutgroupHelper
         groceryItem.getText().clear();
     }
 
+//    Notify user if something went wrong with adding the item to the grocerylist.
     @Override
     public void gotgroupputHelperError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

@@ -6,14 +6,18 @@ public class Task implements Serializable {
     private String taskName;
     private String taskDescription;
     private int taskDays;
-    private String responsibleUser;
+    private int responsibleUser;
+    private long initialTime;
+    private long  finishTime;
 
 //    Initiate class for task when new task is added.
-    public Task(String taskName, String taskDescription, int taskDays, String responsibleUser)  {
+    public Task(String taskName, String taskDescription, int taskDays, int responsibleUser, long initialTime, long finishTime)  {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskDays = taskDays;
         this.responsibleUser = responsibleUser;
+        this.initialTime = initialTime;
+        this.finishTime = finishTime;
     }
 //    Initiate getters
     public String getTaskName() {
@@ -31,11 +35,19 @@ public class Task implements Serializable {
         return taskDays;
     }
 
-    public String getResponsibleUser() {
+    public int getResponsibleUser() {
         return responsibleUser;
     }
 
-//    Initiate setters
+    public long getInitialTime() {
+        return initialTime;
+    }
+
+    public long getFinishTime() {
+        return finishTime;
+    }
+
+    //    Initiate setters
     public void setTaskName(String taskName) {
 
         this.taskName = taskName;
@@ -50,7 +62,14 @@ public class Task implements Serializable {
         this.taskDays = taskDays;
     }
 
-    public void setResponsibleUser(String responsibleUser) {
+    public void setResponsibleUser(int responsibleUser) {
         this.responsibleUser = responsibleUser;
+    }
+    public void setInitialTime(long initialTime) {
+        this.initialTime = initialTime;
+    }
+
+    public void setFinishTime(long finishTime) {
+        this.finishTime = finishTime;
     }
 }

@@ -11,15 +11,19 @@ public class Group implements Serializable {
     private ArrayList<String> groceryList;
     private ArrayList<String> groupMembers;
     private ArrayList<Task> groupTasks;
+    private ArrayList<Integer> memberIds;
 
 //    Initiate class object for group when group is created.
-    public Group(int groupId, String groupName, String groupPassword, ArrayList<String> groceryList, ArrayList<String> groupMembers, ArrayList<Task> groupTasks) {
+    public Group(int groupId, String groupName, String groupPassword, ArrayList<String> groceryList,
+                 ArrayList<String> groupMembers, ArrayList<Task> groupTasks,
+                 ArrayList<Integer> memberIds) {
         this.groupId = groupId;
         this.groupName = groupName;
         this.groupPassword = groupPassword;
         this.groceryList = groceryList;
         this.groupMembers = groupMembers;
         this.groupTasks = groupTasks;
+        this.memberIds = memberIds;
     }
 
 //    Initiate getters.
@@ -45,7 +49,9 @@ public class Group implements Serializable {
         return groupTasks;
     }
 
-//    Initiate setters.
+    public ArrayList<Integer> getMemberIds() { return memberIds; }
+
+    //    Initiate setters.
     public void setGroupId(int groupId) {
         this.groupId = groupId;
     }
@@ -63,5 +69,8 @@ public class Group implements Serializable {
     }
     public void setGroupTasks(ArrayList<Task> groupTasks) {
         this.groupTasks = groupTasks;
+    }
+    public void setMemberIds(ArrayList<Integer> memberIds) {
+        this.memberIds = memberIds;
     }
 }

@@ -22,11 +22,11 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/editText7"
-            app:layout_constraintTop_toBottomOf="@+id/editText6" />
+            app:layout_constraintStart_toEndOf="@+id/taskNumber"
+            app:layout_constraintTop_toBottomOf="@+id/taskDescription" />
 
         <EditText
-            android:id="@+id/editText6"
+            android:id="@+id/taskDescription"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -37,7 +37,7 @@
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText5" />
+            app:layout_constraintTop_toBottomOf="@+id/taskName" />
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -47,7 +47,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
         <EditText
-            android:id="@+id/editText5"
+            android:id="@+id/taskName"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -69,10 +69,10 @@
             android:text="Perform every:"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText6" />
+            app:layout_constraintTop_toBottomOf="@+id/taskDescription" />
 
         <EditText
-            android:id="@+id/editText7"
+            android:id="@+id/taskNumber"
             android:layout_width="50dp"
             android:layout_height="60dp"
             android:layout_marginStart="8dp"
@@ -80,7 +80,7 @@
             android:ems="10"
             android:inputType="number"
             app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/editText6" />
+            app:layout_constraintTop_toBottomOf="@+id/taskDescription" />
 
         <Button
             android:id="@+id/button5"
@@ -89,12 +89,16 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:backgroundTint="@color/colorPrimary"
             android:onClick="addnewtask"
             android:text="Add Task"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.47"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText7" />
+            app:layout_constraintTop_toBottomOf="@+id/taskNumber"
+            app:layout_constraintVertical_bias="0.03" />
 
     </android.support.constraint.ConstraintLayout>
 

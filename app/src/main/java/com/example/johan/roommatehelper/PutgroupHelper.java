@@ -22,7 +22,8 @@ public class PutgroupHelper implements Response.ErrorListener, Response.Listener
     String groupPassword;
     ArrayList<String> members;
     ArrayList<String> groceries;
-    ArrayList<String> tasks;
+    ArrayList<String> tasks = new ArrayList<String>();
+    ArrayList<String> memberIds = new ArrayList<String>();
     PutgroupHelper.CallbackPut activity;
 
     //    request right online json file to put score in
@@ -33,12 +34,38 @@ public class PutgroupHelper implements Response.ErrorListener, Response.Listener
         groupPassword = group.getGroupPassword();
         members = group.getGroupMembers();
         groceries = group.getGroceryList();
-//        tasks = group.getGroupTasks();
+        ArrayList<Task> allTasks = group.getGroupTasks();
+        for(int i = 0; i < allTasks.size(); i++) {
+            ArrayList<String> currentTask = new ArrayList<String>();
+            Task thisTask = allTasks.get(i);
+            String taskName = thisTask.getTaskName();
+            String taskDescription = thisTask.getTaskDescription();
+            int taskDays = thisTask.getTaskDays();
+            String taskDaysString = Integer.toString(taskDays);
+            int responsibleUser = thisTask.getResponsibleUser();
+            String responsibleUserString = Integer.toString(responsibleUser);
+            long initialTime = thisTask.getInitialTime();
+            String initialTimeString = Long.toString(initialTime);
+            long finishTime = thisTask.getFinishTime();
+            String finishTimeString = Long.toString(finishTime);
+            currentTask.add(taskName);
+            currentTask.add(taskDescription);
+            currentTask.add(taskDaysString);
+            currentTask.add(responsibleUserString);
+            currentTask.add(initialTimeString);
+            currentTask.add(finishTimeString);
+            tasks.add(currentTask.toString());
+        }
+        ArrayList<Integer> memberIdList = group.getMemberIds();
+        for(int j = 0; j<memberIdList.size(); j++) {
+            int currentMemberId = memberIdList.get(j);
+            String currentMemberIdString = Integer.toString(currentMemberId);
+            memberIds.add(currentMemberIdString);
+        }
         int groupId = group.getGroupId();
         String groupIdString = Integer.toString(groupId);
         RequestQueue queue = Volley.newRequestQueue(context);
         Log.d("hierhebbenwe", "PutgroupHelper https://ide50-johadiep.legacy.cs50.io:8080/groups/" + groupIdString);
-//        id van user moet ook meegegeven worden als 8080/users/userid
         PutgroupHelper.PutRequest request = new PutgroupHelper.PutRequest(Request.Method.PUT, "https://ide50-johadiep.legacy.cs50.io:8080/groups/" + groupIdString, this, this);
         queue.add(request);
         Log.d("hierhebbenwe", "Putgrouphelper komen we hier?");
@@ -84,6 +111,8 @@ public class PutgroupHelper implements Response.ErrorListener, Response.Listener
             params.put("GroupMembers", memberArray.toString());
             JSONArray taskArray = new JSONArray(tasks);
             params.put("GroupTasks", taskArray.toString());
+            JSONArray memberIdArray = new JSONArray(memberIds);
+            params.put("MemberIds", memberIdArray.toString());
             return params;
         }
     }

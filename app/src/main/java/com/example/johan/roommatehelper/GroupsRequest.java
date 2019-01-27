@@ -1,7 +1,6 @@
 package com.example.johan.roommatehelper;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -14,6 +13,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 //  Request all groups from online JSON file.
 public class GroupsRequest implements Response.ErrorListener, Response.Listener<JSONArray> {
@@ -43,7 +44,6 @@ public class GroupsRequest implements Response.ErrorListener, Response.Listener<
                 String groupName = currentGroup.getString("GroupName");
                 String groupPassword = currentGroup.getString("GroupPassword");
                 ArrayList<String> groceryList = new ArrayList<String>();
-//                DIT GAAT MIS, DE ARRAYS STAAN ER IN ALS STRINGS, ZE MOETEN ER OF ALS ARRAYLIST IN OF DE STRING MOET MMAKKELIJK NAAR ARRAYLIST GECONVERT WORDEN.
                 String groceries = currentGroup.getString("GroupGroceries");
                 JSONArray groceriesArray = new JSONArray(groceries);
                 for (int j = 0; j < groceriesArray.length(); j++) {
@@ -58,38 +58,59 @@ public class GroupsRequest implements Response.ErrorListener, Response.Listener<
                     String member = membersArray.getString(k);
                     groupMembers.add(member);
                 }
-                ArrayList<String> groupTasks = new ArrayList<String>();
+                ArrayList<Task> groupTasks = new ArrayList<Task>();
                 String tasks = currentGroup.getString("GroupTasks");
+
                 JSONArray tasksArray = new JSONArray(tasks);
                 for (int l = 0; l < tasksArray.length(); l++) {
-                    String task = tasksArray.getString(l);
+                    String currentTask = tasksArray.getString(l);
+                    String newCurrentTask = currentTask.substring(1, currentTask.length()-1);
+                    List<String> taskArray = new ArrayList<String>(Arrays.asList(newCurrentTask
+                            .split(", ")));
+                    String taskName = taskArray.get(0);
+                    String taskDescription = taskArray.get(1);
+                    String taskDaysString = taskArray.get(2);
+                    int taskDays = Integer.parseInt(taskDaysString);
+                    String responsibleUserString = taskArray.get(3);
+                    int responsibleUser = Integer.parseInt(responsibleUserString);
+                    String initialTimeString = taskArray.get(4);
+                    long initialTime = Long.parseLong(initialTimeString);
+                    String finishTimeString = taskArray.get(5);
+                    long finishTime = Long.parseLong(finishTimeString);
+                    Task task = new Task(taskName, taskDescription, taskDays, responsibleUser,
+                            initialTime, finishTime);
                     groupTasks.add(task);
                 }
-                groupsList.add(new Group(groupId, groupName, groupPassword, groceryList, groupMembers, null));
+                ArrayList<Integer> memberIds = new ArrayList<Integer>();
+                String memberIdsList = currentGroup.getString("MemberIds");
+                JSONArray membersIdArray = new JSONArray(memberIdsList);
+
+                for (int m = 0; m < membersIdArray.length(); m++) {
+                    String memberIdString = membersIdArray.getString(m);
+                    int memberId = Integer.parseInt(memberIdString);
+                    memberIds.add(memberId);
+                }
+                groupsList.add(new Group(groupId, groupName, groupPassword, groceryList, groupMembers, groupTasks, memberIds));
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.d("hierhebbenwe", "GroupsRequest fout" + e);
         }
+
 //        Send list to callback.
-        Log.d("hierhebbenwe", "GroupsRequest we gaan naar gotGroups");
         activity.gotGroups(groupsList);
     }
+
 //    Send list of groups or error message back to activity that sent the request.
     public interface Callback {
         void gotGroups(ArrayList<Group> groupsList);
         void gotGroupsError(String message);
-
-    //    Notify the user that the newly created group is added to its account and send user back to OverviewActivity.
-//    void gotputHelper(String message);
-
-    //    Notify user if something went wrong with assigning the group to its account.
-//    void gotputHelperError(String message);
 }
 //    get jsonarray from right url
     void getGroups(Callback activity)   {
         RequestQueue queue = Volley.newRequestQueue(context);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest("https://ide50-johadiep.legacy.cs50.io:8080/groups", this, this);
+        JsonArrayRequest jsonArrayRequest =
+                new JsonArrayRequest("https://ide50-johadiep.legacy.cs50.io:8080/groups",
+                        this, this);
         queue.add(jsonArrayRequest);
         this.activity = activity;
     }

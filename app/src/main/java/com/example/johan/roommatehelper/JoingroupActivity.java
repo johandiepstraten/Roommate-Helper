@@ -16,7 +16,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class JoingroupActivity extends AppCompatActivity implements GroupsRequest.Callback, PutuserHelper.CallbackPut, PutgroupHelper.CallbackPut {
+public class JoingroupActivity extends AppCompatActivity implements GroupsRequest.Callback,
+        PutuserHelper.CallbackPut, PutgroupHelper.CallbackPut {
 
 //    Declare variables to be used throughout the activity.
     private DrawerLayout Drawerlayout;
@@ -35,57 +36,71 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
         ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle("Join Group");
 
+//        Get info about current user and request all groups.
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("loggedInUser");
-        Log.d("hierhebbenwe", "Joingroupactivity" + user);
         GroupsRequest groupRequest = new GroupsRequest(this);
         groupRequest.getGroups(this);
     }
+
+//    Recieve list of all groups.
     @Override
     public void gotGroups(ArrayList<Group> groupsList) {
-        Log.d("hierhebbenwe", "JoingroupActivity gotgroups aangeroepen");
         groups = groupsList;
         Toast.makeText(this, "groups loaded", Toast.LENGTH_SHORT).show();
     }
 
+//    Notify user if requesting groups failed.
     @Override
     public void gotGroupsError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
+//    Send user back to mainactivity if backbutton pressed.
     public void onBackPressed() {
         startActivity(new Intent(JoingroupActivity.this, MainActivity.class));
     }
 
+//    Put user in group if correct username and password are given.
     public void Join(View view) {
         String groupName = ((EditText)findViewById(R.id.groupName)).getText().toString();
         String groupPassword = ((EditText)findViewById(R.id.groupPassword)).getText().toString();
+        Boolean groupFound = false;
         for(int i = 0; i < groups.size(); i++)   {
             Group currentGroup = groups.get(i);
             String currentGroupName = currentGroup.getGroupName();
             if (groupName.equals(currentGroupName))    {
+                groupFound = true;
                 String currentGroupPassword = currentGroup.getGroupPassword();
                 if (groupPassword.equals(currentGroupPassword))   {
                     ArrayList<String> joinedGroup = currentGroup.getGroupMembers();
                     joinedGroup.add(user.getUser_name());
                     currentGroup.setGroupMembers(joinedGroup);
+                    ArrayList<Integer> joinedGroupIds = currentGroup.getMemberIds();
+                    joinedGroupIds.add(user.getUserId());
+                    currentGroup.setMemberIds(joinedGroupIds);
                     group = currentGroup;
-                    PutgroupHelper groupHelper = new PutgroupHelper(currentGroup, getApplicationContext(), JoingroupActivity.this);
+                    PutgroupHelper groupHelper = new PutgroupHelper(currentGroup,
+                            getApplicationContext(), JoingroupActivity.this);
                 } else  {
                     Toast.makeText(this, "Wrong password", Toast.LENGTH_SHORT).show();
                 }
             }
         }
-        Toast.makeText(this, "Username unknown", Toast.LENGTH_SHORT).show();
+        if(!groupFound) {
+            Toast.makeText(this, "Username unknown", Toast.LENGTH_SHORT).show();
+        }
     }
 
+//    Send user to creategroup activity
     public void create_group(View view) {
         Intent intent = new Intent(JoingroupActivity.this, CreategroupActivity.class);
-        Log.d("hierhebbenwe", " JoingroupActivity test");
         intent.putExtra("loggedInUser", user);
         startActivity(intent);
     }
-    //    Notify the user that the newly created group is added to its account and send user back to OverviewActivity.
+
+//    Notify the user that the newly created group is added to its account
+//    and send user back to OverviewActivity.
     @Override
     public void gotputHelper(String message) {
         Toast.makeText(this, "User updated", Toast.LENGTH_SHORT).show();
@@ -93,19 +108,23 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
         intent.putExtra("loggedInUser", user);
         startActivity(intent);
     }
+
     //    Notify user if something went wrong with assigning the group to its account.
     @Override
     public void gotputHelperError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+//    Notify user if group is updated and update user with groupId
     @Override
     public void gotgroupputHelper(String message) {
         Toast.makeText(this, "Group updated", Toast.LENGTH_SHORT).show();
         user.setGroup_id(group.getGroupId());
-        PutuserHelper userHelper = new PutuserHelper(user, getApplicationContext(), JoingroupActivity.this);
+        PutuserHelper userHelper = new PutuserHelper(user, getApplicationContext(),
+                JoingroupActivity.this);
     }
 
+//    Notify user if updating group failed.
     @Override
     public void gotgroupputHelperError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

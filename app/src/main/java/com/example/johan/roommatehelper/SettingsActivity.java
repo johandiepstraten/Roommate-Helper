@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -29,11 +30,21 @@ public class SettingsActivity extends AppCompatActivity {
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
-        actionbar.setTitle("Settings");
+        actionbar.setTitle("Info");
 
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("loggedInUser");
         group = (Group) intent.getSerializableExtra("loggedInGroup");
+
+        TextView infoText = (TextView) findViewById(R.id.appInfo);
+        infoText.setText("Roommate helper is an app that let's you create a group with your " +
+                "friends in order to divide tasks and keep track of a shared grocery list. " +
+                "Everyone in the group will see the same grocery list and is able to update" +
+                " it whenever needed. Tasks are equelly divided when added to the group. " +
+                "The app will keep track of which tasks you have to do and which tasks you have " +
+                "completed. In the 'My Group' screen you can see an overview of all tasks. " +
+                "Pay attention to the fact that the planning of all tasks will be reset each time" +
+                " a new task is added or a change in group mambers is made.");
 
         Drawerlayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);

@@ -16,7 +16,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class CreategroupActivity extends AppCompatActivity implements PostgroupHelper.CallbackPost, GroupsRequest.Callback, PutuserHelper.CallbackPut {
+public class CreategroupActivity extends AppCompatActivity implements PostgroupHelper.CallbackPost,
+        GroupsRequest.Callback, PutuserHelper.CallbackPut {
 
     private DrawerLayout Drawerlayout;
 
@@ -27,6 +28,7 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
     String groupPassword;
     ArrayList<String> members;
     ArrayList<Group> groups;
+    ArrayList<String> memberIds;
 
 //    Set toolbar with title and drawerlayout.
     @Override
@@ -39,17 +41,25 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
         ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle("Create Group");
 
+//        Get info about current user and group
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("loggedInUser");
         String userName = user.getUser_name();
         members = new ArrayList<String>();
         members.add(userName);
+        memberIds = new ArrayList<String>();
+        int userId = user.getUserId();
+        String userIdString = Integer.toString(userId);
+        memberIds.add(userIdString);
+
     }
 
 //    Send user back to JoingroupActivity when back button is pressed
     public void onBackPressed() {
-        startActivity(new Intent(CreategroupActivity.this, JoingroupActivity.class));
-    }
+        Intent shoppingIntent = new Intent(CreategroupActivity.this,
+                JoingroupActivity.class);
+        shoppingIntent.putExtra("loggedInUser", user);
+        startActivity(shoppingIntent);    }
 
 //    Send input user to PostgroupHelper to create new Group object if passwords are the same.
     public void group_created(View view) {
@@ -61,18 +71,18 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
         }   else if (!groupPassword.equals(groupPassword2))  {
             Toast.makeText(this, "passwords must be the same", Toast.LENGTH_SHORT).show();
         }   else    {
-            PostgroupHelper helper = new PostgroupHelper(groupName, groupPassword, members, getApplicationContext(), CreategroupActivity.this);
+            PostgroupHelper helper = new PostgroupHelper(groupName, groupPassword, members,
+                    memberIds, getApplicationContext(), CreategroupActivity.this);
         }
     }
 
-//    When new groups are loaded, the group id of the just created group is copied and entered to the current user.
+//    When new groups are loaded, the group id of the just created group is copied
+//    and entered to the current user.
     @Override
     public void gotGroups(ArrayList<Group> groupsList) {
-        Log.d("hierhebbenwe", "CreateActivity groups zijn opgevraagd");
         groups = new ArrayList<Group>();
         groups = groupsList;
         Toast.makeText(this, "groups loaded", Toast.LENGTH_SHORT).show();
-        Log.d("hierhebbenwe", "CreateActivity groups zijn opgevraagd" + groups.size());
         for(int i = 0; i < groups.size(); i++)  {
             group = groups.get(i);
             String currentName = group.getGroupName();
@@ -80,8 +90,8 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
             if(groupName.equals(currentName) && groupPassword.equals(currentPassword))  {
                 int groupId = group.getGroupId();
                 user.setGroup_id(groupId);
-                Log.d("hierhebbenwe", "Create Activity nu hebben we de juiste groep om de id uit te pakken" + groupId + "  " + user.getGroup_id());
-                PutuserHelper helper = new PutuserHelper(user, getApplicationContext(), CreategroupActivity.this);
+                PutuserHelper helper = new PutuserHelper(user, getApplicationContext(),
+                        CreategroupActivity.this);
             }
         }
     }
@@ -96,7 +106,6 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
     @Override
     public void gotHelper(String message) {
         Toast.makeText(this, "Group created", Toast.LENGTH_SHORT).show();
-        Log.d("hierhebbenwe2", "CreateActivity groep is gepost, nu worden groepen opgevraagd");
         GroupsRequest groupRequest = new GroupsRequest(this);
         groupRequest.getGroups(this);
     }
@@ -106,16 +115,12 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
     public void gotHelperError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-//
-//    @Override
-//    public void onPointerCaptureChanged(boolean hasCapture) {
-//
-//    }
-//    Notify the user that the newly created group is added to its account and send user back to OverviewActivity.
+
+//    Notify the user that the newly created group is added to its account
+//    and send user back to OverviewActivity.
     @Override
     public void gotputHelper(String message) {
         Toast.makeText(this, "User updated", Toast.LENGTH_SHORT).show();
-        Log.d("hierhebbenwe", "CreateActivity nu is de user geupdate en gaan we terug naar overviewactivity");
         Intent intent = new Intent(CreategroupActivity.this, OverviewActivity.class);
         intent.putExtra("loggedInUser", user);
         startActivity(intent);

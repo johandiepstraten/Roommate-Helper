@@ -2,11 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/back"
+            android:icon="@drawable/ic_arrow_back_black_24dp"
+            android:title="" />
+        <item
             android:id="@+id/nav_tasks"
             android:title="My Tasks" />
         <item
             android:id="@+id/nav_group"
-            android:title="Group" />
+            android:title="My Group" />
         <item
             android:id="@+id/nav_shopping"
             android:title="Groceries" />

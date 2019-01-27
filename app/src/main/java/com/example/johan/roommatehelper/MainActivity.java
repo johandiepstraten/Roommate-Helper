@@ -17,8 +17,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements UsersRequest.Callback {
+
+//    Declare variable to use throughout activity.
     ArrayList<User> users;
 
+//    Request list of all users.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,17 +29,21 @@ public class MainActivity extends AppCompatActivity implements UsersRequest.Call
         UsersRequest user = new UsersRequest(this);
         user.getUsers(this);
     }
+
+//    Notify user if users are loaded
     @Override
     public void gotUsers(ArrayList<User> usersList) {
         users = usersList;
         Toast.makeText(this, "Started", Toast.LENGTH_SHORT).show();
     }
 
+//    Notify user if loading users failed.
     @Override
     public void gotUsersError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Server not running", Toast.LENGTH_LONG).show();
     }
 
+//    Log in user if username and password are correct.
     public void Login(View view) {
         String username = ((EditText)findViewById(R.id.loginName)).getText().toString();
         String password = ((EditText)findViewById(R.id.loginPassword)).getText().toString();
@@ -65,11 +72,13 @@ public class MainActivity extends AppCompatActivity implements UsersRequest.Call
         }
     }
 
+//    Send user to NewaccountActivity.
     public void create_account(View view) {
         Intent intent = new Intent(MainActivity.this, NewaccountActivity.class);
         startActivity(intent);
     }
-    //    close app if android back button is pressed in this screen
+
+//    Close app if android back button is pressed in this screen
     public void onBackPressed() {
         Intent close = new Intent(Intent.ACTION_MAIN);
         close.addCategory(Intent.CATEGORY_HOME);

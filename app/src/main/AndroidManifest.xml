@@ -18,19 +18,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GroupActivity" />
-        <activity android:name=".OverviewActivity" />
-        <activity android:name=".ShoppingActivity" />
-        <activity android:name=".AccountActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".NewaccountActivity" />
-        <activity android:name=".AdditemActivity" />
-        <activity android:name=".TaskActivity" />
-        <activity android:name=".TasksviewActivity" />
-        <activity android:name=".AddtaskActivity" />
-        <activity android:name=".EditaccountActivity" />
-        <activity android:name=".JoingroupActivity" />
-        <activity android:name=".CreategroupActivity"></activity>
+        <activity android:name=".GroupActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".OverviewActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ShoppingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AccountActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SettingsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NewaccountActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AdditemActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TaskActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".AddtaskActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".EditaccountActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".JoingroupActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CreategroupActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

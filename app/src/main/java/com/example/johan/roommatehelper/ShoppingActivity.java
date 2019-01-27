@@ -40,7 +40,7 @@ public class ShoppingActivity extends AppCompatActivity implements PutgroupHelpe
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("loggedInUser");
         group = (Group) intent.getSerializableExtra("loggedInGroup");
-        final ArrayList listedGroceries = group.getGroceryList();
+        final ArrayList<String> listedGroceries = group.getGroceryList();
         if(listedGroceries.size() == 0) {
             TextView groceryInfo = findViewById(R.id.groceryInfo);
             groceryInfo.setText("No groceries at the moment.");

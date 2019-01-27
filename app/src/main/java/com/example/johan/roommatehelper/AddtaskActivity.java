@@ -10,9 +10,16 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddtaskActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class AddtaskActivity extends AppCompatActivity implements PutgroupHelper.CallbackPut {
+
+//    Declare variables to use throughout activity
+    User user;
+    Group group;
     private DrawerLayout Drawerlayout;
 
 //    Set toolbar with title and drawerlayout.
@@ -20,6 +27,11 @@ public class AddtaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addtask);
+
+//        Get info about current user en group.
+        Intent intent = getIntent();
+        user = (User) intent.getSerializableExtra("loggedInUser");
+        group = (Group) intent.getSerializableExtra("loggedInGroup");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -45,24 +57,33 @@ public class AddtaskActivity extends AppCompatActivity {
 //                        Send user to selected activity.
                         switch(id)    {
                             case R.id.nav_tasks:
-                                Intent overview_intent = new Intent(AddtaskActivity.this, OverviewActivity.class);
-                                startActivity(overview_intent);
+                                Intent overviewIntent = new Intent(AddtaskActivity.this, OverviewActivity.class);
+                                overviewIntent.putExtra("loggedInUser", user);
+                                startActivity(overviewIntent);
                                 break;
                             case R.id.nav_group:
-                                Intent group_intent = new Intent(AddtaskActivity.this, GroupActivity.class);
-                                startActivity(group_intent);
+                                Intent groupIntent = new Intent(AddtaskActivity.this, GroupActivity.class);
+                                groupIntent.putExtra("loggedInUser", user);
+                                groupIntent.putExtra("loggedInGroup", group);
+                                startActivity(groupIntent);
                                 break;
                             case R.id.nav_shopping:
-                                Intent shopping_intent = new Intent(AddtaskActivity.this, ShoppingActivity.class);
-                                startActivity(shopping_intent);
+                                Intent shoppingIntent = new Intent(AddtaskActivity.this, ShoppingActivity.class);
+                                shoppingIntent.putExtra("loggedInUser", user);
+                                shoppingIntent.putExtra("loggedInGroup", group);
+                                startActivity(shoppingIntent);
                                 break;
                             case R.id.nav_account:
-                                Intent account_intent = new Intent(AddtaskActivity.this, AccountActivity.class);
-                                startActivity(account_intent);
+                                Intent accountIntent = new Intent(AddtaskActivity.this, AccountActivity.class);
+                                accountIntent.putExtra("loggedInUser", user);
+                                accountIntent.putExtra("loggedInGroup", group);
+                                startActivity(accountIntent);
                                 break;
                             case R.id.nav_settings:
-                                Intent settings_intent = new Intent(AddtaskActivity.this, SettingsActivity.class);
-                                startActivity(settings_intent);
+                                Intent settingsIntent = new Intent(AddtaskActivity.this, SettingsActivity.class);
+                                settingsIntent.putExtra("loggedInUser", user);
+                                settingsIntent.putExtra("loggedInGroup", group);
+                                startActivity(settingsIntent);
                                 break;
                         }
                         return true;
@@ -83,11 +104,51 @@ public class AddtaskActivity extends AppCompatActivity {
 
 //    Add input of user as new task to the task list.
     public void addnewtask(View view) {
+        String taskName = ((EditText)findViewById(R.id.taskName)).getText().toString();
+        String taskDescription = ((EditText)findViewById(R.id.taskDescription)).getText().toString();
+        String taskNumberString = ((EditText)findViewById(R.id.taskNumber)).getText().toString();
+        int taskNumber = Integer.parseInt(taskNumberString);
+        long initialTime = System.currentTimeMillis();
+        Task newTask = new Task(taskName, taskDescription, taskNumber, 0, initialTime, 0 );
+        ArrayList<Task> tasks = group.getGroupTasks();
+        ArrayList<Integer> memberIds = group.getMemberIds();
+        tasks.add(newTask);
+        for(int i = 0; i<tasks.size(); i++) {
+            Task currentTask = tasks.get(i);
+            currentTask.setInitialTime(initialTime);
+            currentTask.setFinishTime(0);
+            int responsibleUserId = memberIds.get(i%memberIds.size());
+            currentTask.setResponsibleUser(responsibleUserId);
+        }
+        group.setGroupTasks(tasks);
+        PutgroupHelper groupHelper = new PutgroupHelper(group, getApplicationContext(),
+                AddtaskActivity.this);
         Toast.makeText(this, "Task added", Toast.LENGTH_SHORT).show();
     }
 
-//    Send user to TasksviewActivity when back button is pressed.
+//    Send user to GroupActivity when back button is pressed.
     public void onBackPressed() {
-        startActivity(new Intent(AddtaskActivity.this, TasksviewActivity.class));
+        Intent groupIntent = new Intent(AddtaskActivity.this, GroupActivity.class);
+        groupIntent.putExtra("loggedInUser", user);
+        groupIntent.putExtra("loggedInGroup", group);
+        startActivity(groupIntent);
+        }
+
+//    Notivy user if task is added and  clear text fields
+    @Override
+    public void gotgroupputHelper(String message) {
+        Toast.makeText(this, "Task added", Toast.LENGTH_SHORT).show();
+        EditText taskName = findViewById(R.id.taskName);
+        EditText taskDescription = findViewById(R.id.taskDescription);
+        EditText taskNumber = findViewById(R.id.taskNumber);
+        taskName.getText().clear();
+        taskDescription.getText().clear();
+        taskNumber.getText().clear();
+    }
+
+//    notify user if something went wrong with adding the task
+    @Override
+    public void gotgroupputHelperError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
