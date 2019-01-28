@@ -52,7 +52,7 @@ I spent most of the day debugging small irregulaties in my code.
 It's a slow but steady process with good perspective.
 I decided to put the group_id in the user class instead of the group name. This way multiple groups can have the same name.
 users without a group will get group_id 0 because the API won't assign that id number. This way all users with no group will be sent to the "join group activity" where they can join an existing group or create a new one.
-I also decided that a each group class will contain a list with user_id's. This is more error proof than the usage of usernames.
+I also decided that each group class will contain a list with user_id's. This is more error proof than the usage of usernames.
 Lastly I'm having some troubles with passing on the class of the logged in user by intents between all activities.
 
 # day 8
@@ -67,3 +67,12 @@ Rehabilitating from eye surgery.
 # day 10
 
 Rehabilitating from eye surgery.
+
+# day 11
+
+Rehabilitating from eye surgery.
+
+# day 12
+
+Today I fixed all bugs in the so far written code. The logged in user is now passed on correctly through the entire app. This way it stays "logged in". I also managed to let the user create or join groups if the user is not allready in a group. A group can be joined if the user knows the username and password of the group. This is 
+
