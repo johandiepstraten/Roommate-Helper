@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +19,7 @@ import java.util.ArrayList;
 
 public class ShoppingActivity extends AppCompatActivity implements PutgroupHelper.CallbackPut {
 
+//    Declare variables to use throughout activity.
     User user;
     Group group;
     String removedGrocery;
@@ -30,6 +30,7 @@ public class ShoppingActivity extends AppCompatActivity implements PutgroupHelpe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping);
 
+//        Set up toolbar.
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
@@ -37,6 +38,7 @@ public class ShoppingActivity extends AppCompatActivity implements PutgroupHelpe
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("Grocery List");
 
+//        Get information about current user and group.
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("loggedInUser");
         group = (Group) intent.getSerializableExtra("loggedInGroup");
@@ -46,26 +48,25 @@ public class ShoppingActivity extends AppCompatActivity implements PutgroupHelpe
             groceryInfo.setText("No groceries at the moment.");
         }
 
-        ShoppingAdapter adapter = new ShoppingAdapter(this, R.layout.row_grocery, listedGroceries);
+//        Set up adapter to display grocery list.
+        ShoppingAdapter adapter = new ShoppingAdapter(this, R.layout.row_grocery,
+                listedGroceries);
         ListView listView = findViewById(R.id.shopView);
         listView.setAdapter(adapter);
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 removedGrocery = listedGroceries.get(position).toString();
-                Log.d("hierhebbenwe", "shoppingactivity longclick1" + listedGroceries);
                 listedGroceries.remove(position);
                 group.setGroceryList(listedGroceries);
-                PutgroupHelper groupHelper = new PutgroupHelper(group, getApplicationContext(), ShoppingActivity.this);
-                Log.d("hierhebbenwe", "shoppingactivity longclick2" + listedGroceries);
-                Log.d("hierhebbenwe", "shoppingactivity longclick3" + group.getGroceryList());
-
+                PutgroupHelper groupHelper = new PutgroupHelper(group, getApplicationContext(),
+                        ShoppingActivity.this);
 
                 return false;
             }
         });
 
-
+//        Send user to chosen activity in navigation drawer.
         Drawerlayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(
@@ -73,20 +74,22 @@ public class ShoppingActivity extends AppCompatActivity implements PutgroupHelpe
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                        // set item as selected to persist highlight
+//                        Set item as selected to persist highlight.
                         menuItem.setChecked(true);
 
-                        // close drawer when item is tapped
+//                        Close drawer when item is tapped.
                         Drawerlayout.closeDrawers();
                         int id = menuItem.getItemId();
                         switch(id)    {
                             case R.id.nav_tasks:
-                                Intent overviewIntent = new Intent(ShoppingActivity.this, OverviewActivity.class);
+                                Intent overviewIntent = new Intent(ShoppingActivity.this,
+                                        OverviewActivity.class);
                                 overviewIntent.putExtra("loggedInUser", user);
                                 startActivity(overviewIntent);
                                 break;
                             case R.id.nav_group:
-                                Intent groupIntent = new Intent(ShoppingActivity.this, GroupActivity.class);
+                                Intent groupIntent = new Intent(ShoppingActivity.this,
+                                        GroupActivity.class);
                                 groupIntent.putExtra("loggedInUser", user);
                                 groupIntent.putExtra("loggedInGroup", group);
                                 startActivity(groupIntent);
@@ -94,13 +97,15 @@ public class ShoppingActivity extends AppCompatActivity implements PutgroupHelpe
                             case R.id.nav_shopping:
                                 break;
                             case R.id.nav_account:
-                                Intent accountIntent = new Intent(ShoppingActivity.this, AccountActivity.class);
+                                Intent accountIntent = new Intent(ShoppingActivity.this,
+                                        AccountActivity.class);
                                 accountIntent.putExtra("loggedInUser", user);
                                 accountIntent.putExtra("loggedInGroup", group);
                                 startActivity(accountIntent);
                                 break;
                             case R.id.nav_settings:
-                                Intent settingsIntent = new Intent(ShoppingActivity.this, SettingsActivity.class);
+                                Intent settingsIntent = new Intent(ShoppingActivity.this,
+                                        SettingsActivity.class);
                                 settingsIntent.putExtra("loggedInUser", user);
                                 settingsIntent.putExtra("loggedInGroup", group);
                                 startActivity(settingsIntent);
@@ -110,6 +115,8 @@ public class ShoppingActivity extends AppCompatActivity implements PutgroupHelpe
                     }
                 });
     }
+
+//    Open navigation drawer.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -120,18 +127,22 @@ public class ShoppingActivity extends AppCompatActivity implements PutgroupHelpe
         return super.onOptionsItemSelected(item);
     }
 
+//    Send user to additemactivity.
     public void additem(View view) {
         Intent intent = new Intent(ShoppingActivity.this, AdditemActivity.class);
         intent.putExtra("loggedInUser", user);
         intent.putExtra("loggedInGroup", group);
         startActivity(intent);
     }
+
+//    Send user back to overviewactivity if back button is pressed.
     public void onBackPressed() {
         Intent intent = new Intent(ShoppingActivity.this, OverviewActivity.class);
         intent.putExtra("loggedInUser", user);
         startActivity(intent);
     }
 
+//    Notify user which item is bought and refresh activity.
     @Override
     public void gotgroupputHelper(String message) {
         Toast.makeText(this, "You bought " + removedGrocery, Toast.LENGTH_SHORT).show();
@@ -141,6 +152,7 @@ public class ShoppingActivity extends AppCompatActivity implements PutgroupHelpe
         startActivity(intent);
     }
 
+//    Notify user if updating the group failed.
     @Override
     public void gotgroupputHelperError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

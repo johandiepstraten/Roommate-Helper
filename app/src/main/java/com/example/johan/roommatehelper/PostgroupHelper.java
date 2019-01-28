@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PostgroupHelper implements Response.ErrorListener, Response.Listener {
+
+//    Declare variables to use throughout helper.
     String groupName;
     String groupPassword;
     ArrayList<String> members;
@@ -24,47 +26,51 @@ public class PostgroupHelper implements Response.ErrorListener, Response.Listene
     ArrayList<String> memberIds;
     PostgroupHelper.CallbackPost activity;
 
-    //    request right online json file to put score in
-    public PostgroupHelper(String groupName, String groupPassword, ArrayList<String> members, ArrayList<String> memberIds, Context context, PostgroupHelper.CallbackPost cb) {
+//    Request right online json file to post group in.
+    public PostgroupHelper(String groupName, String groupPassword, ArrayList<String> members,
+                           ArrayList<String> memberIds, Context context,
+                           PostgroupHelper.CallbackPost cb) {
         this.groupName = groupName;
         this.groupPassword = groupPassword;
         this.members = members;
         this.activity = cb;
         this.memberIds = memberIds;
         RequestQueue queue = Volley.newRequestQueue(context);
-        PostgroupHelper.PostRequest request = new PostgroupHelper.PostRequest(Request.Method.POST, "https://ide50-johadiep.legacy.cs50.io:8080/groups", this, this);
+        PostgroupHelper.PostRequest request = new PostgroupHelper.PostRequest(Request.Method.POST,
+                "https://ide50-johadiep.legacy.cs50.io:8080/groups", this,
+                this);
         queue.add(request);
     }
 
-    //     print possible error
+//     Print possible error.
     @Override
     public void onErrorResponse(VolleyError error) {
         error.printStackTrace();
         activity.gotHelperError(error.getMessage());
     }
 
-    //     inform gotHelper if request was succesfull
+//     Inform gotHelper if request was succesfull.
     @Override
     public void onResponse(Object response) {
         activity.gotHelper("Succes!");
     }
 
 
-    //    inform resultactivity with result of request through Callback
+//    Inform requesting activity with result of request through Callback.
     public interface CallbackPost {
         void gotHelper(String message);
-
         void gotHelperError(String message);
     }
 
     public class PostRequest extends StringRequest {
 
-        //       Constructor
-        public PostRequest(int method, String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+//       Constructor.
+        public PostRequest(int method, String url, Response.Listener<String> listener,
+                           Response.ErrorListener errorListener) {
             super(method, url, listener, errorListener);
         }
 
-        //       Method to supply parameters to the request
+//       Method to supply parameters to the request.
         @Override
         protected Map<String, String> getParams() {
 

@@ -89,6 +89,8 @@
             android:layout_marginBottom="8dp"
             android:onClick="Create"
             android:text="Create"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

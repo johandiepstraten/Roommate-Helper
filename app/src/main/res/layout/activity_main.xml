@@ -21,6 +21,8 @@
             android:layout_marginBottom="8dp"
             android:onClick="create_account"
             android:text="Create Account"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -89,39 +91,16 @@
             android:layout_marginBottom="212dp"
             android:onClick="Login"
             android:text="Log in"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/loginPassword"
             app:layout_constraintVertical_bias="0.343" />
 
-        <!--<TextView-->
-            <!--android:id="@+id/task_toolbar_title"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:text="My Tasks"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="20sp"-->
-            <!--android:textStyle="bold" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/textView2"-->
-            <!--android:layout_width="383dp"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:layout_margin="0dp"-->
-            <!--android:background="@color/colorPrimary"-->
-            <!--android:gravity="center_vertical|center_horizontal"-->
-            <!--android:text="My Tasks"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="20sp"-->
-            <!--android:textStyle="bold"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent" />-->
     </android.support.constraint.ConstraintLayout>
 
-    <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
 
 
 </android.support.v4.widget.DrawerLayout>

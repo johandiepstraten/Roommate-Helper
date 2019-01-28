@@ -16,10 +16,12 @@ import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
 
+//    Declare variables to use throughout the activity.
     User user;
     Group group;
     private DrawerLayout Drawerlayout;
 
+//    Set up toolbar and drawermenu.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +34,12 @@ public class SettingsActivity extends AppCompatActivity {
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("Info");
 
+//        Get info about current user and group.
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("loggedInUser");
         group = (Group) intent.getSerializableExtra("loggedInGroup");
 
+//        Set info about app.
         TextView infoText = (TextView) findViewById(R.id.appInfo);
         infoText.setText("Roommate helper is an app that let's you create a group with your " +
                 "friends in order to divide tasks and keep track of a shared grocery list. " +
@@ -46,6 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
                 "Pay attention to the fact that the planning of all tasks will be reset each time" +
                 " a new task is added or a change in group mambers is made.");
 
+//        Send user to chosen activity in the navigation drawer.
         Drawerlayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(
@@ -53,32 +58,36 @@ public class SettingsActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                        // set item as selected to persist highlight
+//                        Set item as selected to persist highlight.
                         menuItem.setChecked(true);
 
-                        // close drawer when item is tapped
+//                        Close drawer when item is tapped.
                         Drawerlayout.closeDrawers();
                         int id = menuItem.getItemId();
                         switch(id)    {
                             case R.id.nav_tasks:
-                                Intent overviewIntent = new Intent(SettingsActivity.this, OverviewActivity.class);
+                                Intent overviewIntent = new Intent(SettingsActivity.this,
+                                        OverviewActivity.class);
                                 overviewIntent.putExtra("loggedInUser", user);
                                 startActivity(overviewIntent);
                                 break;
                             case R.id.nav_group:
-                                Intent groupIntent = new Intent(SettingsActivity.this, GroupActivity.class);
+                                Intent groupIntent = new Intent(SettingsActivity.this,
+                                        GroupActivity.class);
                                 groupIntent.putExtra("loggedInUser", user);
                                 groupIntent.putExtra("loggedInGroup", group);
                                 startActivity(groupIntent);
                                 break;
                             case R.id.nav_shopping:
-                                Intent shoppingIntent = new Intent(SettingsActivity.this, ShoppingActivity.class);
+                                Intent shoppingIntent = new Intent(SettingsActivity.this,
+                                        ShoppingActivity.class);
                                 shoppingIntent.putExtra("loggedInUser", user);
                                 shoppingIntent.putExtra("loggedInGroup", group);
                                 startActivity(shoppingIntent);
                                 break;
                             case R.id.nav_account:
-                                Intent accountIntent = new Intent(SettingsActivity.this, AccountActivity.class);
+                                Intent accountIntent = new Intent(SettingsActivity.this,
+                                        AccountActivity.class);
                                 accountIntent.putExtra("loggedInUser", user);
                                 accountIntent.putExtra("loggedInGroup", group);
                                 startActivity(accountIntent);
@@ -90,6 +99,8 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 });
     }
+
+//    Open drawermenu.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -100,9 +111,7 @@ public class SettingsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void savesettings(View view) {
-        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
-    }
+//    Send user back to overviewactivity if back button is pressed.
     public void onBackPressed() {
         Intent intent = new Intent(SettingsActivity.this, OverviewActivity.class);
         intent.putExtra("loggedInUser", user);
