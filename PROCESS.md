@@ -74,5 +74,21 @@ Rehabilitating from eye surgery.
 
 # day 12
 
-Today I fixed all bugs in the so far written code. The logged in user is now passed on correctly through the entire app. This way it stays "logged in". I also managed to let the user create or join groups if the user is not allready in a group. A group can be joined if the user knows the username and password of the group. This is 
+Over the next few days I'll have to work extra hard to compensate for the last days that I missed. Today I fixed all bugs in the so far written code. The logged in user is now passed on correctly through the entire app. This way it stays "logged in". I also managed to let the user create or join groups if the user is not allready in a group. A group can be joined if the user knows the username and password of the group. This is not ideal but letting users join groups by email requests was to time consuming. I decided to not implement a functionality that sends users push notifications once certain changes in the group are made. Mostly due to the fact that this would require the app to make requests to the online database even when the app is not actively running. Another option would have been to implement some sort of local database complementary to the online database. This would both be possible if not for the limited amount of time. 
+
+# day 13
+
+Now that users can be created and assigned to group I added the functionality to add and delete items from a shared grocery list. If a user adds an item, everyone in the group sees it and is able to delete it from the list once bought. This grocery list is displayed to the user as a listview with an adapter in both the main screen of the app as the "Grocery" screen where items can also be added and deleted. Furthermore, I've written all code for the "account activity" and the "info activity". The user can see and edit information about its account and see general information about the app respectively. Also, I started coding the part of the app where users can see their group and add tasks to it. I completed the functionality where users can leave their current group. In that case the user is sent straight to the screen in which he or she has to join/create a new group. I still have some dificulties implementing the tasks, because the current structure in which tasks are represented in the class (as an arraylist of objects) is not compatible with my online database. So I still have a lot of problems with the post and request activities regarding tasks.
+
+# day 14
+
+Hackathon day
+
+# day 15
+
+I changed the way I post and request the arraylist of tasks in the group. In the post activity everything is converted to a list of strings within a list of tasks. At the request activity everything is converted back. This way I can still work with the tasks as class objects in the rest of my code. Furthermore, I made a formula through which all tasks are equally divided and rotated between the users. The initial time is saved when a task is created. Everytime the app is started the current time is compared with the initial time. This way it is possible to assign the task to the right group member and hide a task temporarily when it is finished for that moment. Now, in the main page, only the tasks that the user still has to perform are displayed. All tasks and their progress can be viewed and managed in the group activity. Lastly, I added an alertbuilderdialog to double check if the user is sure when it asks to leave the group or log out.
+
+# day 16
+
+Today I made the last minor changes in the functionality of the app. I added a functionality that automatically logs in a user when it creates a new account. I updated the layout with clearer title colors, round buttons and icons in the navigation drawer. Some other students tested the app for bugs and found out that the app crashes when a comma is given in the input of a task or grocery item. This is because commas are seen as seperators in lists. I updated my code with more controls on user input to prevent these errors. Lastly, I added an alertbuilderdialog to the main page to double check if the user wants to exit the app if the back button is clicked in this activity.
 
