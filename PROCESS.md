@@ -94,5 +94,5 @@ Today I made the last minor changes in the functionality of the app. I added a f
 
 # day 17
 
-Today I checked all my code and added comments to all methods that were not commented yet. This was quite a lot of work and I should have written more comments during the proces (obviously). I also made a new diagram with screenshots from my app to show how the different activities interact to update my readme file.
+Today I checked all my code and added comments to all methods that were not commented yet. This was quite a lot of work and I should have written more comments during the proces (obviously). I also made a new diagram with screenshots from my app to show how the different activities interact to update my readme file. Lastly, I created a license on github.
 
