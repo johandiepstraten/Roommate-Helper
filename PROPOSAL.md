@@ -20,4 +20,4 @@ The app gives users the possibility to create groups with their roommates. For e
 ### Possible additions to the app include:
 - Let groups keep track of a shared shopping list.
 - Allow users to be part of multiple groups.
-- Let groups keep track of shared expenses. 
+- Let groups keep track of shared expenses.
