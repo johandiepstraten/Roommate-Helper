@@ -33,7 +33,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button"
+            app:layout_constraintTop_toBottomOf="@+id/joinGroupButton"
             app:layout_constraintVertical_bias="0.0" />
 
         <EditText
@@ -67,7 +67,7 @@
             app:layout_constraintTop_toBottomOf="@+id/groupName" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/joinGroupButton"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

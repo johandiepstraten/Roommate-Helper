@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ public class AdditemActivity extends AppCompatActivity implements PutgroupHelper
     Group group;
     User user;
     String newItem;
+    Button disableButton;
     private DrawerLayout Drawerlayout;
 
 //    Set toolbar with title and drawerlayout.
@@ -112,10 +114,13 @@ public class AdditemActivity extends AppCompatActivity implements PutgroupHelper
 
 //    Add input of user as new item to the grocery list.
     public void addnewitem(View view) {
+        disableButton = findViewById(R.id.addGroceryButton);
+        disableButton.setEnabled(false);
         newItem = ((EditText)findViewById(R.id.addGroceries)).getText().toString();
         newItem = newItem.replace(",", "");
         if(newItem.length() == 0) {
             Toast.makeText(this, "Fill in grocery", Toast.LENGTH_SHORT).show();
+            disableButton.setEnabled(true);
         } else {
             ArrayList groceryList = group.getGroceryList();
             groceryList.add(newItem);
@@ -137,11 +142,13 @@ public class AdditemActivity extends AppCompatActivity implements PutgroupHelper
         Toast.makeText(this, newItem + " added to shopping list", Toast.LENGTH_SHORT).show();
         EditText groceryItem = findViewById(R.id.addGroceries);
         groceryItem.getText().clear();
+        disableButton.setEnabled(true);
     }
 
 //    Notify user if something went wrong with adding the item to the grocerylist.
     @Override
     public void gotgroupputHelperError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        disableButton.setEnabled(true);
     }
 }

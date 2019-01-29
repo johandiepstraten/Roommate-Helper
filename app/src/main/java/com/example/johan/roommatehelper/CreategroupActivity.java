@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
     ArrayList<String> members;
     ArrayList<Group> groups;
     ArrayList<String> memberIds;
+    Button disableButton;
 
 //    Set toolbar with title and drawerlayout.
     @Override
@@ -65,13 +67,17 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
 
 //    Send input user to PostgroupHelper to create new Group object if passwords are the same.
     public void group_created(View view) {
+        disableButton = findViewById(R.id.createGroupButton);
+        disableButton.setEnabled(false);
         groupName = ((EditText)findViewById(R.id.createGroupName)).getText().toString();
         groupPassword = ((EditText)findViewById(R.id.createGroupPassword)).getText().toString();
         String groupPassword2 = ((EditText)findViewById(R.id.recreateGroupPassword)).getText().toString();
         if (groupName.length() == 0 || groupPassword.length() == 0)  {
             Toast.makeText(this, "Fill in all boxes", Toast.LENGTH_SHORT).show();
+            disableButton.setEnabled(true);
         }   else if (!groupPassword.equals(groupPassword2))  {
             Toast.makeText(this, "passwords must be the same", Toast.LENGTH_SHORT).show();
+            disableButton.setEnabled(true);
         }   else    {
             PostgroupHelper helper = new PostgroupHelper(groupName, groupPassword, members,
                     memberIds, getApplicationContext(), CreategroupActivity.this);
@@ -101,6 +107,7 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
 //    Notice user when an error in loading the groups occurs.
     @Override
     public void gotGroupsError(String message) {
+        disableButton.setEnabled(true);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
@@ -115,6 +122,7 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
 //    Notice user if something went wrong in uploading the new group object.
     @Override
     public void gotHelperError(String message) {
+        disableButton.setEnabled(true);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -123,6 +131,7 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
     @Override
     public void gotputHelper(String message) {
         Toast.makeText(this, "User updated", Toast.LENGTH_SHORT).show();
+        disableButton.setEnabled(true);
         Intent intent = new Intent(CreategroupActivity.this, OverviewActivity.class);
         intent.putExtra("loggedInUser", user);
         startActivity(intent);
@@ -130,6 +139,7 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
 //    Notify user if something went wrong with assigning the group to its account.
     @Override
     public void gotputHelperError(String message) {
+        disableButton.setEnabled(true);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
     User user;
     Group group;
     ArrayList<Group> groups;
+    Button disableButton;
 
 //    Set toolbar with title and drawerlayout.
     @Override
@@ -65,6 +67,8 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
 
 //    Put user in group if correct username and password are given.
     public void Join(View view) {
+        disableButton = findViewById(R.id.joinGroupButton);
+        disableButton.setEnabled(false);
         String groupName = ((EditText)findViewById(R.id.groupName)).getText().toString();
         String groupPassword = ((EditText)findViewById(R.id.groupPassword)).getText().toString();
         Boolean groupFound = false;
@@ -86,11 +90,13 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
                             getApplicationContext(), JoingroupActivity.this);
                 } else  {
                     Toast.makeText(this, "Wrong password", Toast.LENGTH_SHORT).show();
+                    disableButton.setEnabled(true);
                 }
             }
         }
         if(!groupFound) {
             Toast.makeText(this, "Username unknown", Toast.LENGTH_SHORT).show();
+            disableButton.setEnabled(true);
         }
     }
 
@@ -106,6 +112,7 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
     @Override
     public void gotputHelper(String message) {
         Toast.makeText(this, "User updated", Toast.LENGTH_SHORT).show();
+        disableButton.setEnabled(true);
         Intent intent = new Intent(JoingroupActivity.this, OverviewActivity.class);
         intent.putExtra("loggedInUser", user);
         startActivity(intent);
@@ -114,6 +121,7 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
     //    Notify user if something went wrong with assigning the group to its account.
     @Override
     public void gotputHelperError(String message) {
+        disableButton.setEnabled(true);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -129,6 +137,7 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
 //    Notify user if updating group failed.
     @Override
     public void gotgroupputHelperError(String message) {
+        disableButton.setEnabled(true);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

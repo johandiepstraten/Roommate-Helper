@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ public class AddtaskActivity extends AppCompatActivity implements PutgroupHelper
 //    Declare variables to use throughout activity
     User user;
     Group group;
+    Button disableButton;
     private DrawerLayout Drawerlayout;
 
 //    Set toolbar with title and drawerlayout.
@@ -106,6 +108,8 @@ public class AddtaskActivity extends AppCompatActivity implements PutgroupHelper
 
 //    Add input of user as new task to the task list.
     public void addnewtask(View view) {
+        disableButton = findViewById(R.id.addTaskButton);
+        disableButton.setEnabled(false);
         String taskName = ((EditText)findViewById(R.id.taskName)).getText().toString();
         String taskDescription = ((EditText)findViewById(R.id.taskDescription)).getText().toString();
         String taskNumberString = ((EditText)findViewById(R.id.taskNumber)).getText().toString();
@@ -113,6 +117,7 @@ public class AddtaskActivity extends AppCompatActivity implements PutgroupHelper
         taskName = taskName.replace(",", "");
         if(taskName.length() == 0 || taskDescription.length() == 0 || taskNumberString.length() ==0) {
             Toast.makeText(this, "Fill in all fields", Toast.LENGTH_SHORT).show();
+            disableButton.setEnabled(true);
         } else {
             int taskNumber = Integer.parseInt(taskNumberString);
             long initialTime = System.currentTimeMillis();
@@ -142,7 +147,7 @@ public class AddtaskActivity extends AppCompatActivity implements PutgroupHelper
         startActivity(groupIntent);
         }
 
-//    Notivy user if task is added and  clear text fields
+//    Notify user if task is added and  clear text fields
     @Override
     public void gotgroupputHelper(String message) {
         Toast.makeText(this, "Task added", Toast.LENGTH_SHORT).show();
@@ -152,11 +157,13 @@ public class AddtaskActivity extends AppCompatActivity implements PutgroupHelper
         taskName.getText().clear();
         taskDescription.getText().clear();
         taskNumber.getText().clear();
+        disableButton.setEnabled(true);
     }
 
 //    notify user if something went wrong with adding the task
     @Override
     public void gotgroupputHelperError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        disableButton.setEnabled(true);
     }
 }
