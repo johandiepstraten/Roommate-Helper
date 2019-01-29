@@ -14,7 +14,7 @@ The Roommate Helper app allows you to make groups with your roommates and define
 You can decide how often tasks need to be done and the app will equally divide them among all group members.
 Each group member gets to see their current task and can sign off when the task is completed.
 The app will also send notifications if the deadline is close.
-![alt text](https://github.com/johandiepstraten/Roommate-Helper/blob/master/doc/visualisatie.png)
+![alt text](https://github.com/johandiepstraten/Roommate-Helper/blob/master/doc/Roommate_helper_diagram.png)
 
 ## Prerequisites:
 The app gives users the possibility to create groups with their roommates. For each group data is stored to which all group members have access. This group-structure of the app is similar to the "Wiebetaaltwat" app (https://play.google.com/store/apps/details?id=nl.wiebetaaltwat.webapp). The hard part of designing the app will be to let users create their own accounts and groups. Furthermore, sending notifications to users at the appropriate time will be difficult to implement. 
