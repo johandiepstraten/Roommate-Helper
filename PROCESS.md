@@ -92,3 +92,7 @@ I changed the way I post and request the arraylist of tasks in the group. In the
 
 Today I made the last minor changes in the functionality of the app. I added a functionality that automatically logs in a user when it creates a new account. I updated the layout with clearer title colors, round buttons and icons in the navigation drawer. Some other students tested the app for bugs and found out that the app crashes when a comma is given in the input of a task or grocery item. This is because commas are seen as seperators in lists. I updated my code with more controls on user input to prevent these errors.
 
+# day 17
+
+Today I checked all my code and added comments to all methods that were not commented yet. This was quite a lot of work and I should have written more comments during the proces (obviously). I also made a new diagram with screenshots from my app to show how the different activities interact to update my readme file.
+
