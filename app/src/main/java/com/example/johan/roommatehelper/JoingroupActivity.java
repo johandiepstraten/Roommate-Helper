@@ -1,6 +1,7 @@
 package com.example.johan.roommatehelper;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -35,6 +36,7 @@ public class JoingroupActivity extends AppCompatActivity implements GroupsReques
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle("Join Group");
+        toolbar.setTitleTextColor(Color.WHITE);
 
 //        Get info about current user and request all groups.
         Intent intent = getIntent();

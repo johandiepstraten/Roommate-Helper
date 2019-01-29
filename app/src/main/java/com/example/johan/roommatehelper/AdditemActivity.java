@@ -1,6 +1,7 @@
 package com.example.johan.roommatehelper;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -35,6 +36,7 @@ public class AdditemActivity extends AppCompatActivity implements PutgroupHelper
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("Add Item");
+        toolbar.setTitleTextColor(Color.WHITE);
 
 //        Get info about current user and group.
         Intent intent = getIntent();
@@ -111,11 +113,16 @@ public class AdditemActivity extends AppCompatActivity implements PutgroupHelper
 //    Add input of user as new item to the grocery list.
     public void addnewitem(View view) {
         newItem = ((EditText)findViewById(R.id.addGroceries)).getText().toString();
-        ArrayList groceryList = group.getGroceryList();
-        groceryList.add(newItem);
-        PutgroupHelper groupHelper = new PutgroupHelper(group, getApplicationContext(),
-                AdditemActivity.this);
+        newItem = newItem.replace(",", "");
+        if(newItem.length() == 0) {
+            Toast.makeText(this, "Fill in grocery", Toast.LENGTH_SHORT).show();
+        } else {
+            ArrayList groceryList = group.getGroceryList();
+            groceryList.add(newItem);
+            PutgroupHelper groupHelper = new PutgroupHelper(group, getApplicationContext(),
+                    AdditemActivity.this);
         }
+    }
 
 //    Send user back to ShoppingActivity if back button is pressed.
     public void onBackPressed() {

@@ -1,6 +1,7 @@
 package com.example.johan.roommatehelper;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -37,6 +38,7 @@ public class ShoppingActivity extends AppCompatActivity implements PutgroupHelpe
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("Grocery List");
+        toolbar.setTitleTextColor(Color.WHITE);
 
 //        Get information about current user and group.
         Intent intent = getIntent();

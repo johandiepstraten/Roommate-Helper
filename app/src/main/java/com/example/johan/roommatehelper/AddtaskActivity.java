@@ -1,6 +1,7 @@
 package com.example.johan.roommatehelper;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -39,6 +40,7 @@ public class AddtaskActivity extends AppCompatActivity implements PutgroupHelper
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("Add Task");
+        toolbar.setTitleTextColor(Color.WHITE);
 
         Drawerlayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -107,23 +109,29 @@ public class AddtaskActivity extends AppCompatActivity implements PutgroupHelper
         String taskName = ((EditText)findViewById(R.id.taskName)).getText().toString();
         String taskDescription = ((EditText)findViewById(R.id.taskDescription)).getText().toString();
         String taskNumberString = ((EditText)findViewById(R.id.taskNumber)).getText().toString();
-        int taskNumber = Integer.parseInt(taskNumberString);
-        long initialTime = System.currentTimeMillis();
-        Task newTask = new Task(taskName, taskDescription, taskNumber, 0, initialTime, 0 );
-        ArrayList<Task> tasks = group.getGroupTasks();
-        ArrayList<Integer> memberIds = group.getMemberIds();
-        tasks.add(newTask);
-        for(int i = 0; i<tasks.size(); i++) {
-            Task currentTask = tasks.get(i);
-            currentTask.setInitialTime(initialTime);
-            currentTask.setFinishTime(0);
-            int responsibleUserId = memberIds.get(i%memberIds.size());
-            currentTask.setResponsibleUser(responsibleUserId);
+        taskDescription = taskDescription.replace(",", "");
+        taskName = taskName.replace(",", "");
+        if(taskName.length() == 0 || taskDescription.length() == 0 || taskNumberString.length() ==0) {
+            Toast.makeText(this, "Fill in all fields", Toast.LENGTH_SHORT).show();
+        } else {
+            int taskNumber = Integer.parseInt(taskNumberString);
+            long initialTime = System.currentTimeMillis();
+            Task newTask = new Task(taskName, taskDescription, taskNumber, 0, initialTime, 0 );
+            ArrayList<Task> tasks = group.getGroupTasks();
+            ArrayList<Integer> memberIds = group.getMemberIds();
+            tasks.add(newTask);
+            for(int i = 0; i<tasks.size(); i++) {
+                Task currentTask = tasks.get(i);
+                currentTask.setInitialTime(initialTime);
+                currentTask.setFinishTime(0);
+                int responsibleUserId = memberIds.get(i%memberIds.size());
+                currentTask.setResponsibleUser(responsibleUserId);
+            }
+            group.setGroupTasks(tasks);
+            PutgroupHelper groupHelper = new PutgroupHelper(group, getApplicationContext(),
+                    AddtaskActivity.this);
+            Toast.makeText(this, "Task added", Toast.LENGTH_SHORT).show();
         }
-        group.setGroupTasks(tasks);
-        PutgroupHelper groupHelper = new PutgroupHelper(group, getApplicationContext(),
-                AddtaskActivity.this);
-        Toast.makeText(this, "Task added", Toast.LENGTH_SHORT).show();
     }
 
 //    Send user to GroupActivity when back button is pressed.

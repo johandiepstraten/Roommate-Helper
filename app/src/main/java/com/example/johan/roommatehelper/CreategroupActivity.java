@@ -1,6 +1,7 @@
 package com.example.johan.roommatehelper;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -40,6 +41,7 @@ public class CreategroupActivity extends AppCompatActivity implements PostgroupH
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle("Create Group");
+        toolbar.setTitleTextColor(Color.WHITE);
 
 //        Get info about current user and group
         Intent intent = getIntent();

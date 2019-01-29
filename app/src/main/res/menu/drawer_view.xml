@@ -4,21 +4,32 @@
         <item
             android:id="@+id/back"
             android:icon="@drawable/ic_arrow_back_black_24dp"
-            android:title="" />
+            android:title=""
+            />
         <item
             android:id="@+id/nav_tasks"
-            android:title="My Tasks" />
+            android:title="My Tasks"
+            android:icon="@drawable/ic_group_work_white_24dp"
+            android:iconTint="@color/white"/>
         <item
             android:id="@+id/nav_group"
-            android:title="My Group" />
+            android:title="My Group"
+            android:icon="@drawable/ic_group_white_24dp"
+            android:iconTint="@color/white"/>
         <item
             android:id="@+id/nav_shopping"
-            android:title="Groceries" />
+            android:title="Groceries"
+            android:icon="@drawable/ic_shopping_cart_white_24dp"
+            android:iconTint="@color/white"/>
         <item
             android:id="@+id/nav_account"
-            android:title="My Account" />
+            android:title="My Account"
+            android:icon="@drawable/ic_person_outline_green_200dp"
+            android:iconTint="@color/white"/>
         <item
             android:id="@+id/nav_settings"
-            android:title="Info" />
+            android:title="Info"
+            android:icon="@drawable/ic_info_white_24dp"
+            android:iconTint="@color/white"/>
     </group>
 </menu>

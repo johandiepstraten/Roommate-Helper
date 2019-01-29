@@ -1,6 +1,7 @@
 package com.example.johan.roommatehelper;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -33,6 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("Info");
+        toolbar.setTitleTextColor(Color.WHITE);
 
 //        Get info about current user and group.
         Intent intent = getIntent();
@@ -41,7 +43,8 @@ public class SettingsActivity extends AppCompatActivity {
 
 //        Set info about app.
         TextView infoText = (TextView) findViewById(R.id.appInfo);
-        infoText.setText("Roommate helper is an app that let's you create a group with your " +
+        infoText.setText("Roommate helper is an app  created by Johan Diepstraten for an assignment" +
+                " of the minor programming at the UvA. The app let's you create a group with your " +
                 "friends in order to divide tasks and keep track of a shared grocery list. " +
                 "Everyone in the group will see the same grocery list and is able to update" +
                 " it whenever needed. Tasks are equelly divided when added to the group. " +

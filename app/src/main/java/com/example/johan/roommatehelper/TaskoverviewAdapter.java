@@ -14,7 +14,7 @@ public class TaskoverviewAdapter extends ArrayAdapter<Task> {
 //    Declare variables to use throughout the adapter.
     private ArrayList<Task> myTasks;
     private Context context;
-    long dayinMillis = 86400000;
+    long DAY_IN_MILLIS = 86400000;
 
 //  Initiate adapter.
     public TaskoverviewAdapter(Context context, int resource, ArrayList<Task> myTasks) {
@@ -34,7 +34,7 @@ public class TaskoverviewAdapter extends ArrayAdapter<Task> {
         long initialTime = currentTask.getInitialTime();
         long currentTime = System.currentTimeMillis();
         long timePassed = currentTime - initialTime;
-        long daysPassed = timePassed/dayinMillis;
+        long daysPassed = timePassed/DAY_IN_MILLIS;
         int daysInt = (int)daysPassed;
         int daysLeft = currentTask.getTaskDays() - daysInt;
         ((TextView) listView.findViewById(R.id.taskDeadlineView)).setText(daysLeft + " days.");

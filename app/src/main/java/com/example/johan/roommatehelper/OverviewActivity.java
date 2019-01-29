@@ -1,10 +1,13 @@
 package com.example.johan.roommatehelper;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +26,7 @@ public class OverviewActivity extends AppCompatActivity implements GroupsRequest
     private DrawerLayout Drawerlayout;
     User user;
     Group group;
-    long dayinMillis = 86400000;
+    long DAY_IN_MILLIS = 86400000;
     long currentTime;
     int cleaningWeek;
 
@@ -39,6 +42,8 @@ public class OverviewActivity extends AppCompatActivity implements GroupsRequest
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle("My Tasks");
+        toolbar.setTitleTextColor(Color.WHITE);
+
 
 //        Get info about user and find corresponding group
         Intent intent = getIntent();
@@ -123,7 +128,7 @@ public class OverviewActivity extends AppCompatActivity implements GroupsRequest
         startActivity(close);
     }
 
-//    Get group of user and display personal tasks.
+//    Get group of user and display personal tasks and groceries.
     @Override
     public void gotGroups(ArrayList<Group> groupsList) {
         for(int i = 0; i < groupsList.size(); i++)  {
@@ -131,6 +136,21 @@ public class OverviewActivity extends AppCompatActivity implements GroupsRequest
             if(currentGroup.getGroupId() == user.getGroup_id()) {
                 group = currentGroup;
                 Toast.makeText(this, "ready", Toast.LENGTH_LONG).show();
+                ArrayList<String> listedGroceries = group.getGroceryList();
+                ShoppingAdapter adapter = new ShoppingAdapter(this, R.layout.row_grocery,
+                        listedGroceries);
+                ListView listView = findViewById(R.id.groceryOverView);
+                listView.setAdapter(adapter);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent shoppingIntent = new Intent(OverviewActivity.this,
+                                ShoppingActivity.class);
+                        shoppingIntent.putExtra("loggedInUser", user);
+                        shoppingIntent.putExtra("loggedInGroup", group);
+                        startActivity(shoppingIntent);
+                    }
+                });
                 if(group.getGroupTasks().size() > 0) {
                     ArrayList<Task> taskList = group.getGroupTasks();
                     currentTime = System.currentTimeMillis();
@@ -138,7 +158,7 @@ public class OverviewActivity extends AppCompatActivity implements GroupsRequest
                     long timeSinceInitial = currentTime - initialTime;
 
 //                    One day is 86400000 milliseconds.
-                    long timeDays = timeSinceInitial/dayinMillis;
+                    long timeDays = timeSinceInitial/DAY_IN_MILLIS;
                     int timeDaysInt = (int)timeDays;
                     ArrayList<Integer> memberIds = group.getMemberIds();
                     for(int j = 0; j<taskList.size(); j++) {
@@ -162,25 +182,10 @@ public class OverviewActivity extends AppCompatActivity implements GroupsRequest
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-//    Set adapter to view all users tasks and groceries that need to be bougth.
+//    Set adapter to view all users tasks that are not completed yet.
     @Override
     public void gotgroupputHelper(String message) {
         Toast.makeText(this, "responsibilities updated", Toast.LENGTH_LONG).show();
-        ArrayList<String> listedGroceries = group.getGroceryList();
-        ShoppingAdapter adapter = new ShoppingAdapter(this, R.layout.row_grocery,
-                listedGroceries);
-        ListView listView = findViewById(R.id.groceryOverView);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent shoppingIntent = new Intent(OverviewActivity.this,
-                        ShoppingActivity.class);
-                shoppingIntent.putExtra("loggedInUser", user);
-                shoppingIntent.putExtra("loggedInGroup", group);
-                startActivity(shoppingIntent);
-            }
-        });
         ArrayList<Task> myTasks = new ArrayList<Task>();
         ArrayList<Task> allTasks = group.getGroupTasks();
         for (int i = 0; i<allTasks.size(); i++) {
@@ -188,7 +193,7 @@ public class OverviewActivity extends AppCompatActivity implements GroupsRequest
             if(currentTask.getResponsibleUser() == user.getUserId()) {
                 long finishTime = currentTask.getFinishTime();
                 long timeSinceFinish = currentTime - finishTime;
-                long timeDays = timeSinceFinish/dayinMillis;
+                long timeDays = timeSinceFinish/DAY_IN_MILLIS;
                 int timeDaysInt = (int)timeDays;
                 int days = currentTask.getTaskDays();
                 int currentCleaningWeek = timeDaysInt/days;

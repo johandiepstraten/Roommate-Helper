@@ -2,6 +2,7 @@ package com.example.johan.roommatehelper;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,7 +25,7 @@ public class TaskActivity extends AppCompatActivity implements PutgroupHelper.Ca
     User user;
     Group group;
     Task task;
-    long dayinMillis = 86400000;
+    long DAY_IN_MILLIS = 86400000;
     private DrawerLayout Drawerlayout;
 
     @Override
@@ -43,7 +44,7 @@ public class TaskActivity extends AppCompatActivity implements PutgroupHelper.Ca
         long initialTime = task.getInitialTime();
         long currentTime = System.currentTimeMillis();
         long timePassed = currentTime - initialTime;
-        long daysPassed = timePassed/dayinMillis;
+        long daysPassed = timePassed/DAY_IN_MILLIS;
         int daysInt = (int)daysPassed;
         int daysLeft = task.getTaskDays() - daysInt;
         ((TextView) findViewById(R.id.deadlineInfo)).setText(daysLeft + " days left to complete task.");
@@ -55,6 +56,7 @@ public class TaskActivity extends AppCompatActivity implements PutgroupHelper.Ca
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         actionbar.setTitle(task.getTaskName());
+        toolbar.setTitleTextColor(Color.WHITE);
 
 //        Send user to chosen activity.
         Drawerlayout = findViewById(R.id.drawer_layout);
@@ -154,7 +156,7 @@ public class TaskActivity extends AppCompatActivity implements PutgroupHelper.Ca
 //                    When No button is pressed.
                     case DialogInterface.BUTTON_NEGATIVE:
                         CheckBox checkbox = (CheckBox) findViewById(R.id.checkBox);
-                        checkbox.setSelected(false);
+                        checkbox.setChecked(false);
                         break;
                 }
             }
