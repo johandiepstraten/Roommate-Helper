@@ -18,3 +18,7 @@ The app also allows roommates to keep track of a shared grocery list. Everyone c
 ## Visualisation:
 ![alt text](https://github.com/johandiepstraten/Roommate-Helper/blob/master/doc/Roommate_helper_diagram.png)
 
+### Acknowledgements & Sources:
+Special thanks to the minor programming team. 
+https://developer.android.com/training/implementing-navigation/nav-drawer
+https://stackoverflow.com/questions/2478517/how-to-display-a-yes-no-dialog-box-on-android
