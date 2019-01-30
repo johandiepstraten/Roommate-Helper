@@ -1,3 +1,7 @@
+/*
+Johan Diepstraten 10774920
+In this activity users can create a new group.
+*/
 package com.example.johan.roommatehelper;
 
 import android.content.Intent;

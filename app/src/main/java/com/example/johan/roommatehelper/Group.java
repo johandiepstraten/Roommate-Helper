@@ -3,7 +3,10 @@ package com.example.johan.roommatehelper;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-
+/*
+Johan Diepstraten 10774920
+in this class everything that belongs in the group is defined.
+*/
 public class Group implements Serializable {
     private int groupId;
     private String groupName;

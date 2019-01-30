@@ -1,3 +1,7 @@
+/*
+Johan Diepstraten 10774920
+Here all existing users are loaded in from the online JSON file as a list of User objects.
+*/
 package com.example.johan.roommatehelper;
 
 import android.content.Context;

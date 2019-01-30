@@ -1,3 +1,7 @@
+/*
+Johan Diepstraten 10774920
+This request loads in all information about existing groups and returns a list of group objects.
+*/
 package com.example.johan.roommatehelper;
 
 import android.content.Context;

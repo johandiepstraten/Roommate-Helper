@@ -1,3 +1,8 @@
+/*
+Johan Diepstraten 10774920
+This activity shows information about a users current taks and allows him/her to indicate that
+the task is finished.
+*/
 package com.example.johan.roommatehelper;
 
 import android.content.DialogInterface;

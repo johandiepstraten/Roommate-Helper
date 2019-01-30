@@ -1,3 +1,7 @@
+/*
+Johan Diepstraten 10774920
+This class defines all attributes of a user.
+*/
 package com.example.johan.roommatehelper;
 
 import java.io.Serializable;

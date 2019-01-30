@@ -1,3 +1,7 @@
+/*
+Johan Diepstraten 10774920
+This adapter displays all the users current uncompleted tasks in a listview.
+*/
 package com.example.johan.roommatehelper;
 
 import android.content.Context;

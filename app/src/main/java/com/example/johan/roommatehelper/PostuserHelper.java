@@ -1,3 +1,7 @@
+/*
+Johan Diepstraten 10774920
+Here a noew user is posted to the online JSON file.
+*/
 package com.example.johan.roommatehelper;
 
 import android.content.Context;

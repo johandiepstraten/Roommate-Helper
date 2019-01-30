@@ -1,3 +1,7 @@
+/*
+Johan Diepstraten 10774920
+In this activity the user can view information about the group it is in and delete tasks.
+*/
 package com.example.johan.roommatehelper;
 
 import android.content.DialogInterface;

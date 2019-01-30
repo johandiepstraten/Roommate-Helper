@@ -1,3 +1,7 @@
+/*
+Johan Diepstraten 10774920
+This activity gives the user an overview of its current tasks and items on the grocery list.
+*/
 package com.example.johan.roommatehelper;
 
 import android.content.DialogInterface;

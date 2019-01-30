@@ -1,3 +1,7 @@
+/*
+Johan Diepstraten 10774920
+In this activity the user can see and delete items from the grocery list.
+*/
 package com.example.johan.roommatehelper;
 
 import android.content.Intent;

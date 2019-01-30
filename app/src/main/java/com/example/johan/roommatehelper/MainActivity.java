@@ -1,3 +1,7 @@
+/*
+Johan Diepstraten 10774920
+This activity allows the user to log in.
+*/
 package com.example.johan.roommatehelper;
 
 import android.content.Intent;

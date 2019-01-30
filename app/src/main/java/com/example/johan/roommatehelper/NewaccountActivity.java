@@ -1,3 +1,7 @@
+/*
+Johan Diepstraten 10774920
+This activity allows the user to create a new account.
+*/
 package com.example.johan.roommatehelper;
 
 import android.content.Intent;

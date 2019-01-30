@@ -1,3 +1,8 @@
+/*
+Johan Diepstraten 10774920
+This activity shows the user info about its account, The user can choose to edit this info and log out of its account.
+*/
+
 package com.example.johan.roommatehelper;
 
 import android.content.DialogInterface;

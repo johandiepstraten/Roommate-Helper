@@ -1,3 +1,7 @@
+/*
+Johan Diepstraten 10774920
+This activity lets the user join an existing group.
+*/
 package com.example.johan.roommatehelper;
 
 import android.content.Intent;

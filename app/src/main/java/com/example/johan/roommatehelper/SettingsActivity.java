@@ -1,3 +1,7 @@
+/*
+Johan Diepstraten 10774920
+In this activity the user can read information about the app.
+*/
 package com.example.johan.roommatehelper;
 
 import android.content.Intent;

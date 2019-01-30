@@ -1,3 +1,7 @@
+/*
+Johan Diepstraten 10774920
+This adapter shows all items in a grocery list in a listview.
+*/
 package com.example.johan.roommatehelper;
 
 import android.content.Context;

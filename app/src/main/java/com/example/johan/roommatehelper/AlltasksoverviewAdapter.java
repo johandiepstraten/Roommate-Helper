@@ -1,3 +1,8 @@
+/*
+Johan Diepstraten 10774920
+This adapter helps to show all tasks in the group in a listview. Users can see if the task is
+finished or still has some time remaining before the deadline.
+*/
 package com.example.johan.roommatehelper;
 
 import android.content.Context;
