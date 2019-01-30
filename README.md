@@ -16,11 +16,11 @@ Each group member gets to see their current task and can sign off when the task 
 The app also allows roommates to keep track of a shared grocery list. Everyone can add items to the grocery list and delete these items once bought.
 
 ## Visualisation:
+![alt text](https://github.com/johandiepstraten/Roommate-Helper/blob/master/doc/Roommate_Diagram.png)
+
 Click on this link for a demo of the app:
 
 https://www.youtube.com/watch?v=IYF6f51yx10&feature=youtu.be
-
-![alt text](https://github.com/johandiepstraten/Roommate-Helper/blob/master/doc/Roommate_Diagram.png)
 
 ### Acknowledgements & Sources:
 Special thanks to the minor programming team. 
