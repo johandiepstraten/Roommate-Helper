@@ -96,3 +96,7 @@ Today I made the last minor changes in the functionality of the app. I added a f
 
 Today I checked all my code and added comments to all methods that were not commented yet. This was quite a lot of work and I should have written more comments during the proces (obviously). I also made a new diagram with screenshots from my app to show how the different activities interact to update my readme file. Lastly, I created a license on github.
 
+# day 18
+
+Today I fixed a last bug that allowed the user to add tasks, grocery items or him/herself multiple times if the user pressed the "add button" impatiently. Now the button is disabled untill the add request is either passed on or rejected. Furthermore, I updated my visualisation of the app with screenshots and an uml diagram that represent the actual technical design of the app instead of the proposed one at the start of the project. Lastly, I learned that all activities in the code requier a header so I added those and pushed the code to github once more. Now my whole project is finished and I can start writing the final report.
+
