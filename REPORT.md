@@ -52,12 +52,22 @@ Above every screen is displayed what adapters and helpers functionalities are us
 All data is stored in an online JSON file. The data is stored in two seperate JSON files, one for every object of the users class and one for every object of the groups class.
 As can be seen at the buttom of the picture, the app also makes use of a third "Task" class. 
 Because tasks are inseperable from their groups, they are uploaded in the groups JSON file as well. As a list of class objects.
+Throughout the app, three ways of communicating with the online JSON file are used. Post helpers upload new instances of a class to the file, put helpers alter existing instances and Request activities download all information from the given fill and return it as a list of class objects.
 
-// vertel wat voor communicatie manieren er met de json zijn.
-// vertel hoe users en groups aan elkaar zijn verbonden.
-// vertel hoe de juiste group en user worden opgehaald en doorgegeven.
+Every user and every group has a unique id. This way groups and users can be connected to each other.
+In every user object the id of its group is saved and in every class object exists a list of user id's. 
+Consequently, for every user, the right group can be loaded and, for every group, the tasks can be divided among the right users.
+In every task the id of the current responsible user is saved as well. If users are not yet connected to a group, or left their group, their linked group id is set to "0". Because the group id "0" does not exist in the online JSON file, users who are not in a group can be distinguished and therefore be sent to the activities where they can either join or create a group.
 
+When a user logs in, the user class object with his or her information is loaded together with the group object. These objects are passed on throughout the entire app so that every activity has access to the needed information. 
+
+As soon as a task is created, the current time is saved in its class instance. Everytime a user logs in to the app the current time will be taken again. These two timestamps, together with the frequency of how often a task is expected to be performed, allows the app to calculate which user is responsible for which task at that current moment. If a user completes a task, the current time is saved as well. This way the responsible user only has to do the task once within the given time frame.
 
 ## Challenges: 
+
+During the process of creating the app I faced several challanges that caused me to make changes in the app. 
+The biggest challenge was to implement correct communication between the application and the online database. First I wanted to use a Firebase API to manage this interaction, but because this proposed great diffuculties time- and codewise I was forced to use a known online database. Since I had a relatively small amount of classes I had to design their structure wisely. Because putting the correct group object within each user object was devious, time consuming and difficult to implement in my database, I decided to keep track of users and groups seperately and link them to each other solely by their id numbers. Furthermore, users can only be assigned to one group instead of multiple ones. Also, joining a group requires the user to know the name and password of the group instead of accepting an invite to the group by email.
+
+The original plan for the application included push notifications that told users when it was time to perform a new task or if they had limited time left to complete a task. Now these push notifications are left out of the app and users have to check for their tasks by opening up the application. Lastly, users can now only see what tasks are completed and what the remaining time is to perform the other tasks. They only see for what tasks they themselves are responsible. Not which group member is responsible for the other tasks.
 
 ## Changes:
