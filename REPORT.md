@@ -18,7 +18,9 @@ You can decide how often tasks need to be done and the app will equally divide t
 Each group member gets to see their current task and can sign off when the task is completed.
 The app also allows roommates to keep track of a shared grocery list.
 Everyone can add items to the grocery list and delete these items once bought.
-![alt text](https://github.com/johandiepstraten/Roommate-Helper/blob/master/doc/overviewActivity.png)
+
+![alt text](https://github.com/johandiepstraten/Roommate-Helper/blob/master/doc/overviewActivitysmall.png)
+
 Screenshot of the mainscreen of the app. 
 This screen gives the user an overview of the current tasks that are assigned to him/her and displays the groceries that need to be bought.
 
